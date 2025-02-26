@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cliente</h1>
+
+
+<script src="~/js/cliente.js"></script>
+<script src="~/js/generic.js"></script>
+
+<form id="frmBusquedaCliente" method="post">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" onkeyup="buscarReservas()" placeholder="Buscar por nombre, modelo..." aria-label="Buscar" aria-describedby="button-addon2" id="txtTerminoBusqueda" name="terminoBusqueda">
+        <button class="btn btn-danger" onclick="limpiarReservas()" type="button" id="button-addon2">limpiar</button>
+    </div>
+</form>
+
+
+<div id="divtabla"></div>
+
