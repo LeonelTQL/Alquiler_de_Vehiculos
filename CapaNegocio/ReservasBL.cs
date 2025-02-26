@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace CapaNegocio
 {
-    public class ReservasBL
+    public class ReservaBL
     {
-        public List<ReservasCLS> listarReservas()
+        public List<ReservaCLS> listarReservas()
         {
             ReservasDAL obj = new ReservasDAL();
 
             return obj.listarReservas();
         }
 
-        public List<ReservasCLS> filtrarReservas(ReservasCLS objReservas)
+        public List<ReservaCLS> filtrarReservas(ReservaCLS objReservas)
         {
             ReservasDAL obj = new ReservasDAL();
             return obj.filtrarReservas(objReservas);
         }
 
-        public int guardarReservas(ReservasCLS obj)
+        public int guardarReservas(ReservaCLS obj)
         {
             ReservasDAL oTipoMedicamentoDAL = new ReservasDAL();
             return oTipoMedicamentoDAL.guardarReservas(obj);

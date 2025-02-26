@@ -29,11 +29,11 @@ namespace CapaDatos
                                 {
                                     ClienteCLS oReserva = new ClienteCLS()
                                     {
-                                        IdCliente = drd.GetInt32(0),
-                                        Nombre = drd.GetString(1),
-                                        Apellido = drd.GetString(2),
-                                        Telefono = drd.GetString(3),
-                                        Email = drd.GetString(4),
+                                        idCliente = drd.GetInt32(0),
+                                        nombre = drd.GetString(1),
+                                        apellido = drd.GetString(2),
+                                        telefono = drd.GetString(3),
+                                        email = drd.GetString(4)
                                     };
                                     lista.Add(oReserva);
                                 }
@@ -48,7 +48,7 @@ namespace CapaDatos
                 return lista;
             }
 
-        public int AgregarCliente(ClienteCLS oCliente)
+        public int GuargarCliente(ClienteCLS oCliente)
         {
             int rpta = 0;
             using (SqlConnection cn = new SqlConnection(cadenaDato))
@@ -56,13 +56,13 @@ namespace CapaDatos
                 cn.Open();
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand("uspAgregarCliente", cn))
+                    using (SqlCommand cmd = new SqlCommand("uspGuardarCliente", cn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add(new SqlParameter("@nombre", oCliente.Nombre));
-                        cmd.Parameters.Add(new SqlParameter("@apellido", oCliente.Apellido));
-                        cmd.Parameters.Add(new SqlParameter("@telefono", oCliente.Telefono));
-                        cmd.Parameters.Add(new SqlParameter("@email", oCliente.Email));
+                        cmd.Parameters.Add(new SqlParameter("@nombre", oCliente.nombre));
+                        cmd.Parameters.Add(new SqlParameter("@apellido", oCliente.apellido));
+                        cmd.Parameters.Add(new SqlParameter("@telefono", oCliente.telefono));
+                        cmd.Parameters.Add(new SqlParameter("@email", oCliente.email));
                         rpta = cmd.ExecuteNonQuery();
                     }
                 }
@@ -96,7 +96,7 @@ namespace CapaDatos
             return rpta;
         }
 
-        public ClienteCLS ObtenerCliente(int idCliente)
+        public ClienteCLS FiltrarClientes(int idCliente)
         {
             ClienteCLS oCliente = new ClienteCLS();
             using (SqlConnection cn = new SqlConnection(cadenaDato))
@@ -104,7 +104,7 @@ namespace CapaDatos
                 cn.Open();
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand("uspObtenerCliente", cn))
+                    using (SqlCommand cmd = new SqlCommand("uspFiltrarCliente", cn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add(new SqlParameter("@idCliente", idCliente));
@@ -112,11 +112,11 @@ namespace CapaDatos
                         if (drd != null)
                         {
                             drd.Read();
-                            oCliente.IdCliente = drd.GetInt32(0);
-                            oCliente.Nombre = drd.GetString(1);
-                            oCliente.Apellido = drd.GetString(2);
-                            oCliente.Telefono = drd.GetString(3);
-                            oCliente.Email = drd.GetString(4);
+                            oCliente.idCliente = drd.GetInt32(0);
+                            oCliente.nombre = drd.GetString(1);
+                            oCliente.apellido = drd.GetString(2);
+                            oCliente.telefono = drd.GetString(3);
+                            oCliente.email = drd.GetString(4);
                         }
                     }
                 }
@@ -126,6 +126,11 @@ namespace CapaDatos
                 }
             }
             return oCliente;
+        }
+
+        public List<ClienteCLS> FiltrarCliente(ClienteDAL objCliente)
+        {
+            throw new NotImplementedException();
         }
     }
     }

@@ -8,27 +8,27 @@ namespace Alquiler_de_Vehiculos.Controllers
     {
         public IActionResult Index()
         {
-            ReservasBL obj = new ReservasBL();
+            ReservaBL obj = new ReservaBL();
             var reservas = obj.listarReservas();
             return View(reservas);
         }
 
-        public List<ReservasCLS> listarReservas()
+        public List<ReservaCLS> listarReservas()
         {
-            ReservasBL obj = new ReservasBL();
+            ReservaBL obj = new ReservaBL();
 
             return obj.listarReservas();
         }
 
-        public List<ReservasCLS> filtrarReservas(ReservasCLS objReservas)
+        public List<ReservaCLS> filtrarReservas(ReservaCLS objReservas)
         {
-            ReservasBL obj = new ReservasBL();
+            ReservaBL obj = new ReservaBL();
             return obj.filtrarReservas(objReservas);
         }
 
-        public int guardarReservas(ReservasCLS obj)
+        public int guardarReservas(ReservaCLS obj)
         {
-            ReservasBL oReservas = new ReservasBL();
+            ReservaBL oReservas = new ReservaBL();
             return oReservas.guardarReservas(obj);
         }
     }

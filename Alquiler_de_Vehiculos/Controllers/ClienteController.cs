@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CapaEntidad;
+using CapaNegocio;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Alquiler_de_Vehiculos.Controllers
 {
@@ -6,7 +8,28 @@ namespace Alquiler_de_Vehiculos.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            ClienteBL obj = new ClienteBL();
+            var reservas = obj.listarClientes();
+            return View(reservas);
+        }
+
+        public List<ClienteCLS> listarClientes()
+        {
+            ClienteBL obj = new ClienteBL();
+
+            return obj.listarClientes();
+        }
+
+        public List<ClienteCLS> filtrarClientes(ClienteCLS objReservas)
+        {
+            ClienteBL obj = new ClienteBL();
+            return obj.FiltrarClientes(objReservas);
+        }
+
+        public int guardarReservas(ClienteCLS obj)
+        {
+            ClienteBL oReservas = new ClienteBL();
+            return oReservas.guardarCliente(obj);
         }
     }
 }

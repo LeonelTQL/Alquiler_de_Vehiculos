@@ -65,3 +65,11 @@ function EliminarCliente(id) {
         }
     });
 }
+
+function FiltrarClientes() {
+    let forma = document.getElementById("frmBusquedaCliente");
+    let frm = new FormData(forma);
+    fetchpost("Clientes/filtrarClientes", "json", frm, function (data) {
+        document.getElementById("divContenedorTabla").innerHTML = generarTabla(data);
+    });
+}

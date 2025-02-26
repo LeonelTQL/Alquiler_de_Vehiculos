@@ -12,9 +12,9 @@ namespace CapaDatos
 {
     public class ReservasDAL: ConexionDAL
     {
-        public List<ReservasCLS> listarReservas()
+        public List<ClienteCLS> listarReservas()
         {
-            List<ReservasCLS> lista = new List<ReservasCLS>();
+            List<ClienteCLS> lista = new List<ClienteCLS>();
             using (SqlConnection cn = new SqlConnection(cadenaDato))
             {
                 cn.Open();
@@ -28,14 +28,13 @@ namespace CapaDatos
                         {
                             while (drd.Read())
                             {
-                                ReservasCLS oReserva = new ReservasCLS()
+                                ClienteCLS oReserva = new ClienteCLS()
                                 {
-                                    idReservas = drd.GetInt32(0),
-                                    nombreCliente = drd.GetString(1),
-                                    vehiculo = drd.GetString(2),
-                                    fechaInicio = DateOnly.FromDateTime(drd.GetDateTime(3)),
-                                    fechaFin = DateOnly.FromDateTime(drd.GetDateTime(4)),
-                                    estado = drd.GetString(5)
+                                    idCliente = drd.GetInt32(0),
+                                    nombre = drd.GetString(1),
+                                    apellido = drd.GetString(2),
+                                    telefono = drd.GetString(3),
+                                    email = drd.GetString(4)
                                 };
                                 lista.Add(oReserva);
                             }
@@ -50,9 +49,9 @@ namespace CapaDatos
             return lista;
         }
 
-        public List<ReservasCLS> filtrarReservas(ReservasCLS obj)
+        public List<ReservaCLS> filtrarReservas(ReservaCLS obj)
         {
-            List<ReservasCLS> lista = new List<ReservasCLS>();
+            List<ReservaCLS> lista = new List<ReservaCLS>();
 
             using (SqlConnection cn = new SqlConnection(cadenaDato))
             {
@@ -73,7 +72,7 @@ namespace CapaDatos
                         {
                             while (dr.Read())
                             {
-                                ReservasCLS reserva = new ReservasCLS
+                                ReservaCLS reserva = new ReservaCLS
                                 {
                                     idReservas = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
                                     nombreCliente = dr.IsDBNull(1) ? "" : dr.GetString(1),
@@ -95,7 +94,7 @@ namespace CapaDatos
             return lista;
         }
 
-        public int guardarReservas(ReservasCLS oReservaCLS)
+        public int guardarReservas(ReservaCLS oReservaCLS)
         {
             int rpta = 0;
 
