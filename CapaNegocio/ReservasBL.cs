@@ -16,5 +16,17 @@ namespace CapaNegocio
 
             return obj.listarReservas();
         }
+
+        public List<ReservasCLS> filtrarReservas(ReservasCLS objReservas)
+        {
+            ReservasDAL obj = new ReservasDAL();
+            return obj.filtrarReservas(objReservas);
+        }
+
+        public int guardarReservas(ReservasCLS obj)
+        {
+            ReservasDAL oTipoMedicamentoDAL = new ReservasDAL();
+            return oTipoMedicamentoDAL.guardarReservas(obj);
+        }
     }
 }

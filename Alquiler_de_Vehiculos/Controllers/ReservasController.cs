@@ -19,5 +19,17 @@ namespace Alquiler_de_Vehiculos.Controllers
 
             return obj.listarReservas();
         }
+
+        public List<ReservasCLS> filtrarReservas(ReservasCLS objReservas)
+        {
+            ReservasBL obj = new ReservasBL();
+            return obj.filtrarReservas(objReservas);
+        }
+
+        public int guardarReservas(ReservasCLS obj)
+        {
+            ReservasBL oReservas = new ReservasBL();
+            return oReservas.guardarReservas(obj);
+        }
     }
 }
