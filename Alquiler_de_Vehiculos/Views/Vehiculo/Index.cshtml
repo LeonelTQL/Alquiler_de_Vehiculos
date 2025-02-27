@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Vehiculos</h1>
+
+<script src="~/js/vehiculo.js"></script>
+<script src="~/js/generic.js"></script>
+
+<form id="frmBusquedaVehiculos" method="post">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" onkeyup="buscarVehiculos()" placeholder="Buscar por nombre, modelo..." aria-label="Buscar" aria-describedby="button-addon2" id="txtTerminoBusqueda" name="terminoBusqueda">
+        <button class="btn btn-danger" onclick="limpiarVehiculos('frmBusquedaVehiculos')" type="button" id="button-addon2">limpiar</button>
+    </div>
+</form>
+
+<form id="frmGuardarVehiculos" method="post">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="marca">Marca:</label>
+                        <input type="text" class="form-control" id="txtmarca" name="marca">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="modelo">Modelo:</label>
+                        <input type="text" class="form-control" id="txtmodelo" name="modelo">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="anio">Año:</label>
+                        <input type="text" class="form-control" id="txtanio" name="anio">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="precio">Precio:</label>
+                        <input type="text" class="form-control" id="txtprecio" name="precio">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="estado">Estado:</label>
+                        <input type="text" class="form-control" id="txtestado" name="estado">
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="gap-2">
+                        <button type="button" onclick="guardarVehiculos()" class="btn btn-primary">
+                            Guardar
+                        </button>
+                        <button type="button" onclick="limpiarVehiculos('frmGuardarVehiculos')" class="btn btn-danger">
+                            Limpiar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="divtabla"></div>

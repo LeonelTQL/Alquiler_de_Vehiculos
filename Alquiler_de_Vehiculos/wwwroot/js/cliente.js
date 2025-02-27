@@ -5,19 +5,18 @@
 let objClientes;
 async function listarClientes() {
     objClientes = {
-        url: "Clientes/listarClientes",
-        cabeceras: ["ID Cliente", "Nombre", "Apellidos", "Teléfono", "Email"],
-        propiedades: ["idCliente", "nombre", "apellidos", "telefono", "email"],
+        url: "Cliente/listarClientes",
+        cabeceras: ["ID Cliente", "Nombre", "Apellido", "Teléfono", "Email"],
+        propiedades: ["idCliente", "nombre", "apellido", "telefono", "email"],
         divContenedorTabla: "divContenedorTabla",
+        propiedadId: "idCliente",
         editar: true,
         eliminar: true
     };
     pintar(objClientes);
 }
-
-
-function buscarCliente() {
-    let forma = document.getElementById("frmBusquedaCliente");
+function buscarClientes() {
+    let forma = document.getElementById("frmBusquedaClientes");
     let frm = new FormData(forma);
     let terminoBusqueda = frm.get("terminoBusqueda") || "";
 
@@ -27,49 +26,43 @@ function buscarCliente() {
         listarClientes();
         return;
     }
-    fetchpost("Reservas/filtrarClientes", "json", frm, function (data) {
+    fetchpost("Cliente/filtrarClientes", "json", frm, function (data) {
         document.getElementById("divContenedorTabla").innerHTML = generarTabla(data);
     });
 }
 
-function limpiarClientes() {
-    LimpiarDatos("frmBusquedaCliente");
+function limpiarClientes(idFormulario) {
+    LimpiarDatos(idFormulario);
     listarClientes();
 }
 
-function AgregarCliente() {
-    let forma = document.getElementById("frmGuardarCliente");
+function guardarClientes() {
+    let forma = document.getElementById("frmGuardarClientes");
     let frm = new FormData(forma);
-    fetchpost("Cliente/guardarClientes", "text", frm, function (res) {
-        if (res === "1") {
-            listarClientes();
 
-        }
+    Confirmacion(undefined, undefined, function () {
+        fetchpost("Cliente/guardarClientes", "text", frm, function (res) {
+            if (res === "1") {
+                listarClientes();
+
+            }
+        });
     });
 }
 
-function obtenerCliente(id) {
-    fetchget("Clientes/obtenerCliente?id=" + id, function (data) {
-        document.getElementById("idCliente").value = data.idCliente;
-        document.getElementById("nombre").value = data.nombre;
-        document.getElementById("apellidos").value = data.apellidos;
-        document.getElementById("telefono").value = data.telefono;
-        document.getElementById("email").value = data.email;
+function Eliminar(id) {
+
+    Confirmacion("Eliminar", "Desea eliminar el cliente", function () {
+        fetchGet(`Cliente/eliminarClientes?id=${id}`, "text", function (data) {
+            if (data === "1") {
+                listarClientes();
+            } else {
+                alert("No se pudo eliminar el cliente");
+            }
+        });
     });
 }
 
-function EliminarCliente(id) {
-    fetchget("Clientes/eliminarCliente?id=" + id, function (data) {
-        if (data === "1") {
-            listarClientes();
-        }
-    });
-}
-
-function FiltrarClientes() {
-    let forma = document.getElementById("frmBusquedaCliente");
-    let frm = new FormData(forma);
-    fetchpost("Clientes/filtrarClientes", "json", frm, function (data) {
-        document.getElementById("divContenedorTabla").innerHTML = generarTabla(data);
-    });
+function Editar(id) {
+    recuperar("Cliente/recuperarClientes?id=" + id, "frmGuardarClientes");
 }

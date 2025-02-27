@@ -14,20 +14,32 @@ namespace CapaNegocio
         {
             ClienteDAL obj = new ClienteDAL();
 
-            return obj.listarCliente();
+            return obj.listarClientes();
         }
 
-        public List<ClienteCLS> FiltrarClientes(ClienteCLS objCliente)
+        public List<ClienteCLS> filtrarClientes(ClienteCLS objCliente)
         {
             ClienteDAL obj = new ClienteDAL();
-            return obj.FiltrarCliente(objCliente);
-        }
-        public int guardarCliente(ClienteCLS obj)
-        {
-            ClienteDAL oClienteDAL = new ClienteDAL();
-            return oClienteDAL.GuargarCliente(obj);
+            return obj.filtrarClientes(objCliente);
         }
 
+        public int guardarClientes(ClienteCLS obj)
+        {
+            ClienteDAL oClienteDAL = new ClienteDAL();
+            return oClienteDAL.guardarClientes(obj);
+        }
+
+        public int eliminarClientes(int id)
+        {
+            ClienteDAL obj = new ClienteDAL();
+            return obj.eliminarClientes(id);
+        }
+
+        public ClienteCLS recuperarClientes(int obj)
+        {
+            ClienteDAL oClienteDAL = new ClienteDAL();
+            return oClienteDAL.recuperarClientes(obj);
+        }
     }
 
 }

@@ -1,4 +1,5 @@
-﻿using CapaEntidad;
+﻿using CapaDatos;
+using CapaEntidad;
 using CapaNegocio;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +10,8 @@ namespace Alquiler_de_Vehiculos.Controllers
         public IActionResult Index()
         {
             ClienteBL obj = new ClienteBL();
-            var reservas = obj.listarClientes();
-            return View(reservas);
+            var clientes = obj.listarClientes();
+            return View(clientes);
         }
 
         public List<ClienteCLS> listarClientes()
@@ -20,16 +21,29 @@ namespace Alquiler_de_Vehiculos.Controllers
             return obj.listarClientes();
         }
 
-        public List<ClienteCLS> filtrarClientes(ClienteCLS objReservas)
+        public List<ClienteCLS> filtrarClientes(ClienteCLS objCliente)
         {
             ClienteBL obj = new ClienteBL();
-            return obj.FiltrarClientes(objReservas);
+            return obj.filtrarClientes(objCliente);
         }
 
-        public int guardarReservas(ClienteCLS obj)
+        public int guardarClientes(ClienteCLS obj)
         {
-            ClienteBL oReservas = new ClienteBL();
-            return oReservas.guardarCliente(obj);
+            ClienteBL oCliente = new ClienteBL();
+            return oCliente.guardarClientes(obj);
+        }
+
+
+        public int eliminarClientes(int id)
+        {
+            ClienteBL obj = new ClienteBL();
+            return obj.eliminarClientes(id);
+        }
+
+        public ClienteCLS recuperarClientes(int idCliente)
+        {
+            ClienteBL obj = new ClienteBL();
+            return obj.recuperarClientes(idCliente);
         }
     }
 }

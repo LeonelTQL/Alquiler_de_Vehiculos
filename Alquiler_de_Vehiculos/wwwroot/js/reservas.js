@@ -37,12 +37,12 @@ function limpiarReservas() {
     listarReservas();
 }
 
-function guardarMedicamento() {
+function guardarReservas() {
     let forma = document.getElementById("frmGuardarReservas");
     let frm = new FormData(forma);
     fetchpost("Reservas/guardarReservas", "text", frm, function (res) {
         if (res === "1") {
-            listarMedicamento();
+            listarReservas();
 
         }
     });
