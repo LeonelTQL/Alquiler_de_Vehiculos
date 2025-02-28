@@ -35,6 +35,10 @@ namespace CapaNegocio
             return obj.eliminarEmpleados(id);
         }
 
-
+        public EmpleadosCLS recuperarEmpleados(int obj)
+        {
+            EmpleadosDAL oEmpleadosDAL = new EmpleadosDAL();
+            return oEmpleadosDAL.recuperarEmpleados(obj);
+        }
     }
 }

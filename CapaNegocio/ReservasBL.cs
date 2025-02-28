@@ -28,5 +28,7 @@ namespace CapaNegocio
             ReservasDAL oReservasDAL = new ReservasDAL();
             return oReservasDAL.guardarReservas(obj);
         }
+
+      
     }
 }

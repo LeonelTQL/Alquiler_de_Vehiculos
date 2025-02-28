@@ -12,19 +12,49 @@ async function fetchGet(url, tiporespuesta, callback) {
     try {
         let raiz = document.getElementById("hdfOculto").value;
         let urlCompleta = window.location.protocol + "//" + window.location.host + "/" + raiz + url;
+
+        console.log("Haciendo GET a:", urlCompleta);
+
         let res = await fetch(urlCompleta);
+        console.log("Respuesta HTTP:", res.status, res.statusText);
+
+        // Verificar si la respuesta es exitosa
+        if (!res.ok) {
+            throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+        }
+
+        // Clonamos la respuesta para poder leerla dos veces
+        const resCopy = res.clone();
+
+        // Leer el texto sin procesar para depuración
+        const rawText = await resCopy.text();
+        console.log("Respuesta en texto crudo:", rawText);
 
         let data;
         if (tiporespuesta === "json") {
-            data = await res.json();
+            // Solo intenta analizar como JSON si hay contenido
+            if (rawText.trim() === "") {
+                console.error("Respuesta vacía cuando se esperaba JSON");
+                data = null;
+            } else {
+                try {
+                    data = JSON.parse(rawText);
+                } catch (e) {
+                    console.error("Error al parsear JSON:", e);
+                    console.log("Texto que falló al parsear:", rawText);
+                    throw new Error("Respuesta no es JSON válido: " + e.message);
+                }
+            }
         } else if (tiporespuesta === "text") {
-            data = await res.text();
+            data = rawText;
         } else {
             data = res;
         }
-        console.log("Datos recibidos:", data);
+
+        console.log("Datos procesados:", data);
         callback(data);
     } catch (e) {
+        console.error("Error en fetchGet:", e);
         alert("Algo salió mal: " + e.message);
     }
 }
@@ -218,4 +248,22 @@ function Error() {
         "hideMethod": "fadeOut"
     }
     toastr.error("No se pudo guardar");
+}
+
+function cerrarModal(modalId) {
+
+    var modalElement = document.getElementById(modalId);
+
+    if (modalElement) {
+        modalElement.addEventListener('hidden.bs.modal', function () {
+           
+            let backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
+
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = 'auto';
+        });
+    }
 }

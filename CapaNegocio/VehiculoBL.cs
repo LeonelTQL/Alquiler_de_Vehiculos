@@ -35,5 +35,11 @@ namespace CapaNegocio
             VehiculoDAL obj = new VehiculoDAL();
             return obj.eliminarVehiculos(id);
         }
+
+        public VehiculoCLS recuperarVehiculos(int obj)
+        {
+            VehiculoDAL oVehiculoDAL = new VehiculoDAL();
+            return oVehiculoDAL.recuperarVehiculos(obj);
+        }
     }
 }

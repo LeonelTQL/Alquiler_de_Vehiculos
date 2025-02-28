@@ -64,4 +64,54 @@
     </div>
 </form>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Vehiculo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmEditarVehiculos" method="post">
+                    <input type="hidden" class="form-control" id="txtidVehiculoModal" name="idVehiculo">
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="marca">Marca:</label>
+                            <input type="text" class="form-control" id="txtmarcaModal" name="marca">
+                        </div>
+                    </div>
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="modelo">Modelo:</label>
+                            <input type="text" class="form-control" id="txtmodeloModal" name="modelo">
+                        </div>
+                    </div>
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="anio">Año:</label>
+                            <input type="text" class="form-control" id="txtanioModal" name="anio">
+                        </div>
+                    </div>
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="precio">Precio:</label>
+                            <input type="text" class="form-control" id="txtprecioModal" name="precio">
+                        </div>
+                    </div>
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="estado">Estado:</label>
+                            <input type="text" class="form-control" id="txtestadoModal" name="estado">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarEdicion()">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="divtabla"></div>

@@ -41,7 +41,6 @@ namespace CapaNegocio
             return oClienteDAL.recuperarClientes(obj);
         }
     }
-
 }
     
     

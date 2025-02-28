@@ -101,13 +101,12 @@ namespace CapaDatos
 
             using (SqlConnection cn = new SqlConnection(cadenaDato))
             {
-                cn.Open();
                 try
                 {
+                    cn.Open();
                     using (SqlCommand cmd = new SqlCommand("uspGuardarReserva", cn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-
 
                         cmd.Parameters.AddWithValue("@id", oReservaCLS.idReservas);
                         cmd.Parameters.AddWithValue("@clienteId", oReservaCLS.idCliente);
@@ -122,9 +121,12 @@ namespace CapaDatos
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
+                    throw; 
                 }
             }
             return rpta;
         }
+
+
     }
 }

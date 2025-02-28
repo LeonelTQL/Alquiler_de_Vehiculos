@@ -66,4 +66,54 @@
     </div>
 </form>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Empleados</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmEditarEmpleados" method="post">
+                    <input type="hidden" class="form-control" id="txtidempleadoModal" name="idEmpleado">
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" class="form-control" id="txtnombreModal" name="nombre">
+                        </div>
+                    </div>
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" class="form-control" id="txtapellidoModal" name="apellido">
+                        </div>
+                    </div>
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="cargo">Cargo:</label>
+                            <input type="text" class="form-control" id="txtcargoModal" name="cargo">
+                        </div>
+                    </div>
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="telefono">Telefono:</label>
+                            <input type="text" class="form-control" id="txttelefonoModal" name="telefono">
+                        </div>
+                    </div>
+                    <div class="md-3">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="text" class="form-control" id="txtemailModal" name="email">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarEdicion()">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="divtabla"></div>

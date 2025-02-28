@@ -1,5 +1,6 @@
 ﻿window.onload = function () {
     listarClientes();
+
 }
 
 let objClientes;
@@ -64,5 +65,44 @@ function Eliminar(id) {
 }
 
 function Editar(id) {
-    recuperar("Cliente/recuperarClientes?id=" + id, "frmGuardarClientes");
+
+
+    fetchGet("Cliente/recuperarClientes?idCliente=" + id, "json", function (Clientes) {
+
+        if (Clientes) {
+
+            document.getElementById("txtidClienteModal").value = Clientes.idCliente || '';
+            document.getElementById("txtnombreModal").value = Clientes.nombre || '';
+            document.getElementById("txtapellidoModal").value = Clientes.apellido || '';
+            document.getElementById("txttelefonoModal").value = Clientes.telefono || '';
+            document.getElementById("txtemailModal").value = Clientes.email || '';
+
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                keyboard: false
+            });
+            myModal.show();
+            cerrarModal('exampleModal');
+        } else {
+            console.error('No se encontraron datos para el cliente con ID:', id);
+        }
+    });
+}
+
+function guardarEdicion() {
+    let frmEditar = document.getElementById("frmEditarClientes");
+    let frm = new FormData(frmEditar);
+
+
+    Confirmacion("Confirmar", "¿Desea guardar los cambios?", function () {
+        fetchpost("Cliente/guardarClientes", "text", frm, function (res) {
+            if (res == "1") {
+                Exito();
+                listarClientes();
+                var modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
+                modal.hide();
+            } else {
+                Error();
+            }
+        });
+    });
 }

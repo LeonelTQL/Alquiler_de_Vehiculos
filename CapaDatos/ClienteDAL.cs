@@ -144,10 +144,10 @@ namespace CapaDatos
             return rpta;
         }
 
+
         public ClienteCLS recuperarClientes(int idCliente)
         {
             ClienteCLS oClienteCLS = null;
-
 
             using (SqlConnection cn = new SqlConnection(cadenaDato))
             {
@@ -155,27 +155,21 @@ namespace CapaDatos
                 try
                 {
                     using (SqlCommand cmd = new SqlCommand("uspRecuperarCliente", cn))
-
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@id", idCliente);
 
                         SqlDataReader drd = cmd.ExecuteReader();
-
-                        if (drd != null)
+                        if (drd != null && drd.Read())
                         {
-
-
-                            while (drd.Read())
+                            oClienteCLS = new ClienteCLS
                             {
-                                oClienteCLS = new ClienteCLS();
-                        oClienteCLS.idCliente = drd.IsDBNull(0) ? 0 : drd.GetInt32(0);
-                        oClienteCLS.nombre = drd.IsDBNull(1) ? "" : drd.GetString(1);
-                        oClienteCLS.apellido = drd.IsDBNull(2) ? "" : drd.GetString(2);
-                        oClienteCLS.telefono = drd.IsDBNull(3) ? "" : drd.GetString(3);
-                        oClienteCLS.email = drd.IsDBNull(4) ? "" : drd.GetString(4);
-
-                            }
+                                idCliente = drd.IsDBNull(0) ? 0 : drd.GetInt32(0),
+                                nombre = drd.IsDBNull(1) ? "" : drd.GetString(1),
+                                apellido = drd.IsDBNull(2) ? "" : drd.GetString(2),
+                                telefono = drd.IsDBNull(3) ? "" : drd.GetString(3),
+                                email = drd.IsDBNull(4) ? "" : drd.GetString(4)
+                            };
                         }
                     }
                 }
@@ -183,7 +177,6 @@ namespace CapaDatos
                 {
                     cn.Close();
                     oClienteCLS = null;
-
                 }
             }
             return oClienteCLS;

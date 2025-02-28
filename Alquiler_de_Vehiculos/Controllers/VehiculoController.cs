@@ -31,13 +31,15 @@ namespace Alquiler_de_Vehiculos.Controllers
             VehiculoBL oVehiculo = new VehiculoBL();
             return oVehiculo.guardarVehiculos(obj);
         }
-
-
         public int eliminarVehiculos(int id)
         {
             VehiculoBL obj = new VehiculoBL();
             return obj.eliminarVehiculos(id);
         }
-
+        public VehiculoCLS recuperarVehiculos(int idVehiculo)
+        {
+            VehiculoBL obj = new VehiculoBL();
+            return obj.recuperarVehiculos(idVehiculo);
+        }
     }
 }

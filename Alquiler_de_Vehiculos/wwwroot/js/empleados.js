@@ -63,3 +63,48 @@ function Eliminar(id) {
         });
     });
 }
+
+
+function Editar(id) {
+
+
+    fetchGet("Empleados/recuperarEmpleados?idEmpleado=" + id, "json", function (Empleados) {
+
+        if (Empleados) {
+
+            document.getElementById("txtidempleadoModal").value = Empleados.idEmpleado || '';
+            document.getElementById("txtnombreModal").value = Empleados.nombre || '';
+            document.getElementById("txtapellidoModal").value = Empleados.apellido || '';
+            document.getElementById("txtcargoModal").value = Empleados.cargo || '';
+            document.getElementById("txttelefonoModal").value = Empleados.telefono || '';
+            document.getElementById("txtemailModal").value = Empleados.email || '';
+
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                keyboard: false
+            });
+            myModal.show();
+            cerrarModal('exampleModal');
+        } else {
+            console.error('No se encontraron datos para el empleado con ID:', id);
+        }
+    });
+}
+
+function guardarEdicion() {
+    let frmEditar = document.getElementById("frmEditarEmpleados");
+    let frm = new FormData(frmEditar);
+
+
+    Confirmacion("Confirmar", "¿Desea guardar los cambios?", function () {
+        fetchpost("Empleados/guardarEmpleados", "text", frm, function (res) {
+            if (res == "1") {
+                Exito();
+                listarEmpleados();
+                var modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
+                modal.hide();
+            } else {
+                Error();
+            }
+        });
+    });
+}

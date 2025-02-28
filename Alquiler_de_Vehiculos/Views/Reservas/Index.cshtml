@@ -15,5 +15,61 @@
     </div>
 </form>
 
+<form id="frmGuardarReservas" method="post">
+    <!-- Campo oculto para el ID -->
+    <input type="hidden" name="idReservas" id="idReservas" value="0" />
+
+    <div class="row mb-3">
+        <!-- Dropdown para Cliente -->
+        <div class="col-md-6">
+            <label for="idCliente" class="form-label">Cliente</label>
+            <select class="form-select" id="idCliente" name="idCliente" required>
+                <option value="">-- Seleccione Cliente --</option>
+            </select>
+        </div>
+
+        <!-- Dropdown para Vehículo -->
+        <div class="col-md-6">
+            <label for="idVehiculo" class="form-label">Vehículo</label>
+            <select class="form-select" id="idVehiculo" name="idVehiculo" required>
+                <option value="">-- Seleccione Vehículo --</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- Fecha Inicio -->
+        <div class="col-md-6">
+            <label for="fechaInicio" class="form-label">Fecha Inicio</label>
+            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required />
+        </div>
+
+        <!-- Fecha Fin -->
+        <div class="col-md-6">
+            <label for="fechaFin" class="form-label">Fecha Fin</label>
+            <input type="date" class="form-control" id="fechaFin" name="fechaFin" required />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- Estado -->
+        <div class="col-md-6">
+            <label for="estado" class="form-label">Estado</label>
+            <select class="form-select" id="estado" name="estado" required>
+                <option value="">-- Seleccione Estado --</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Confirmada">Confirmada</option>
+                <option value="En Progreso">En Progreso</option>
+                <option value="Finalizada">Finalizada</option>
+                <option value="Cancelada">Cancelada</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <button type="button" class="btn btn-primary" onclick="guardarReservas()">Guardar</button>
+        <button type="button" class="btn btn-secondary" onclick="limpiarReservas('frmGuardarReservas')">Limpiar</button>
+    </div>
+</form>
 
 <div id="divtabla"></div>

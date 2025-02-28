@@ -38,5 +38,11 @@ namespace Alquiler_de_Vehiculos.Controllers
             EmpleadosBL obj = new EmpleadosBL();
             return obj.eliminarEmpleados(id);
         }
+
+        public EmpleadosCLS recuperarEmpleados(int idEmpleado)
+        {
+            EmpleadosBL obj = new EmpleadosBL();
+            return obj.recuperarEmpleados(idEmpleado);
+        }
     }
 }

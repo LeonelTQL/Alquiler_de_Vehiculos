@@ -146,5 +146,43 @@ namespace CapaDatos
             }
             return rpta;
         }
+
+        public VehiculoCLS recuperarVehiculos(int idVehiculo)
+        {
+            VehiculoCLS oVehiculoCLS = null;
+
+            using (SqlConnection cn = new SqlConnection(cadenaDato))
+            {
+                cn.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspRecuperarVehiculo", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", idVehiculo);
+
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        if (dr != null && dr.Read())
+                        {
+                            oVehiculoCLS = new VehiculoCLS
+                            {
+                                idVehiculo = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                marca = dr.IsDBNull(1) ? "" : dr.GetString(1),
+                                modelo = dr.IsDBNull(2) ? "" : dr.GetString(2),
+                                anio = dr.IsDBNull(3) ? 0 : dr.GetInt32(3),
+                                precio = dr.IsDBNull(4) ? 0 : dr.GetDecimal(4),
+                                estado = dr.IsDBNull(5) ? "" : dr.GetString(5)
+                            };
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    cn.Close();
+                    oVehiculoCLS = null;
+                }
+            }
+            return oVehiculoCLS;
+        }
     }
 }
