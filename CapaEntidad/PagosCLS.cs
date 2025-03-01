@@ -14,7 +14,7 @@ namespace CapaEntidad
         public string vehiculo { get; set; }
         public decimal monto { get; set; }
         public string metodoPago { get; set; }
-        public DateOnly fechaPago { get; set; }
+        public DateTime fechaPago { get; set; }
         public string terminoBusqueda {  get; set; }
     }
 }

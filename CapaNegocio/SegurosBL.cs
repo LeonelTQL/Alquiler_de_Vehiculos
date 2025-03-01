@@ -22,11 +22,22 @@ namespace CapaNegocio
             SegurosDAL obj = new SegurosDAL();
             return obj.filtrarSeguros(objSeguros);
         }
+        public int guardarSeguros(SegurosCLS obj)
+        {
+            SegurosDAL oSegurosDAL = new SegurosDAL();
+            return oSegurosDAL.guardarSeguros(obj);
+        }
+
 
         public int eliminarSeguros(int id)
         {
             SegurosDAL obj = new SegurosDAL();
             return obj.eliminarSeguros(id);
+        }
+        public SegurosCLS recuperarSeguros(int obj)
+        {
+            SegurosDAL oSegurosDAL = new SegurosDAL();
+            return oSegurosDAL.recuperarSeguros(obj);
         }
     }
 }

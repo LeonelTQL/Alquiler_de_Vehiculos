@@ -66,23 +66,51 @@ async function fetchpost(url, tiporespuesta, frm, callback) {
         let raiz = document.getElementById("hdfOculto").value;
         let urlCompleta = window.location.protocol + "//" + window.location.host + "/" + raiz + url;
 
+        console.log("Enviando datos:", {
+            url: urlCompleta,
+            tiporespuesta: tiporespuesta,
+            datos: Object.fromEntries(frm.entries())
+        });
+
         let res = await fetch(urlCompleta, {
             method: "POST",
             body: frm,
-
         });
+
+        if (!res.ok) {
+            throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+        }
+
+
+        const resCopy = res.clone();
+        const rawText = await resCopy.text();
+        console.log("Respuesta en texto crudo:", rawText);
+
         let data;
         if (tiporespuesta === "json") {
-            data = await res.json();
+            if (rawText.trim() === "") {
+                console.error("Respuesta vacía cuando se esperaba JSON");
+                data = null;
+            } else {
+                try {
+                    data = JSON.parse(rawText);
+                } catch (e) {
+                    console.error("Error al parsear JSON:", e);
+                    console.log("Texto que falló al parsear:", rawText);
+                    data = rawText; 
+                }
+            }
         } else if (tiporespuesta === "text") {
-            data = await res.text();
+            data = rawText;
         } else {
             data = res;
         }
 
+        console.log("Datos procesados:", data);
         callback(data);
 
     } catch (e) {
+        console.error("Ocurrio un problema en post:", e);
         alert("Ocurrio un problema en post: " + e.message);
     }
 }
@@ -266,4 +294,12 @@ function cerrarModal(modalId) {
             document.body.style.overflow = 'auto';
         });
     }
+}
+
+function llenarCombo(data, idControl, propiedadId, propiedadNombre) {
+    let contenido = "<option value=''>--Seleccione--</option>";
+    for (let i = 0; i < data.length; i++) {
+        contenido += `<option value='${data[i][propiedadId]}'>${data[i][propiedadNombre]}</option>`;
+    }
+    document.getElementById(idControl).innerHTML = contenido;
 }

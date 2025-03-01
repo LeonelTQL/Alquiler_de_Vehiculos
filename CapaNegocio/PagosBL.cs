@@ -22,11 +22,20 @@ namespace CapaNegocio
             PagosDAL obj = new PagosDAL();
             return obj.filtrarPagos(objPagos);
         }
-
+        public int guardarPagos(PagosCLS obj)
+        {
+            PagosDAL oSegurosDAL = new PagosDAL();
+            return oSegurosDAL.guardarPagos(obj);
+        }
         public int eliminarPagos(int id)
         {
             PagosDAL obj = new PagosDAL();
             return obj.eliminarPagos(id);
+        }
+        public PagosCLS recuperarPagos(int obj)
+        {
+            PagosDAL oPagosDAL = new PagosDAL();
+            return oPagosDAL.recuperarPagos(obj);
         }
     }
 }

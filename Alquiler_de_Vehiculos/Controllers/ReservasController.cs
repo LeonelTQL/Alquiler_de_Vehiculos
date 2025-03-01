@@ -31,7 +31,16 @@ namespace Alquiler_de_Vehiculos.Controllers
             ReservasBL oReservas = new ReservasBL();
             return oReservas.guardarReservas(obj);
         }
+        public int eliminarReservas(int id)
+        {
+            ReservasBL obj = new ReservasBL();
+            return obj.eliminarReservas(id);
+        }
+        public ReservasCLS recuperarReservas(int idReserva)
+        {
+            ReservasBL obj = new ReservasBL();
+            return obj.recuperarReservas(idReserva);
+        }
 
-       
     }
 }

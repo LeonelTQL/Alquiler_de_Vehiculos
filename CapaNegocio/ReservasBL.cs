@@ -28,7 +28,16 @@ namespace CapaNegocio
             ReservasDAL oReservasDAL = new ReservasDAL();
             return oReservasDAL.guardarReservas(obj);
         }
+        public int eliminarReservas(int id)
+        {
+            ReservasDAL obj = new ReservasDAL();
+            return obj.eliminarReservas(id);
+        }
 
-      
+        public ReservasCLS recuperarReservas(int obj)
+        {
+            ReservasDAL oReservasDAL = new ReservasDAL();
+            return oReservasDAL.recuperarReservas(obj);
+        }
     }
 }

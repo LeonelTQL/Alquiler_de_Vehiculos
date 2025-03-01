@@ -33,8 +33,8 @@ namespace CapaDatos
                                     idReservas = drd.GetInt32(0),
                                     nombreCliente = drd.GetString(1),
                                     vehiculo = drd.GetString(2),
-                                    fechaInicio = DateOnly.FromDateTime(drd.GetDateTime(3)),
-                                    fechaFin = DateOnly.FromDateTime(drd.GetDateTime(4)),
+                                    fechaInicio = drd.IsDBNull(3) ? DateTime.Now : drd.GetDateTime(3),
+                                    fechaFin = drd.IsDBNull(4) ? default(DateTime) : drd.GetDateTime(4),
                                     estado = drd.GetString(5)
                                 };
                                 lista.Add(oReserva);
@@ -78,8 +78,8 @@ namespace CapaDatos
                                     idReservas = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
                                     nombreCliente = dr.IsDBNull(1) ? "" : dr.GetString(1),
                                     vehiculo = dr.IsDBNull(2) ? "" : dr.GetString(2),
-                                    fechaInicio = dr.IsDBNull(3) ? new DateOnly() : DateOnly.FromDateTime(dr.GetDateTime(3)),
-                                    fechaFin = dr.IsDBNull(4) ? new DateOnly() : DateOnly.FromDateTime(dr.GetDateTime(4)),
+                                    fechaInicio = dr.IsDBNull(3) ? DateTime.Now : dr.GetDateTime(3),
+                                    fechaFin = dr.IsDBNull(4) ? default(DateTime) : dr.GetDateTime(4),
                                     estado = dr.IsDBNull(5) ? "" : dr.GetString(5)
                                 };
                                 lista.Add(reserva);
@@ -98,35 +98,90 @@ namespace CapaDatos
         public int guardarReservas(ReservasCLS oReservaCLS)
         {
             int rpta = 0;
-
             using (SqlConnection cn = new SqlConnection(cadenaDato))
             {
+                cn.Open();
                 try
                 {
-                    cn.Open();
                     using (SqlCommand cmd = new SqlCommand("uspGuardarReserva", cn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-
                         cmd.Parameters.AddWithValue("@id", oReservaCLS.idReservas);
                         cmd.Parameters.AddWithValue("@clienteId", oReservaCLS.idCliente);
                         cmd.Parameters.AddWithValue("@vehiculoId", oReservaCLS.idVehiculo);
                         cmd.Parameters.AddWithValue("@fechaInicio", oReservaCLS.fechaInicio);
                         cmd.Parameters.AddWithValue("@fechaFin", oReservaCLS.fechaFin);
                         cmd.Parameters.AddWithValue("@estado", oReservaCLS.estado);
-
                         rpta = cmd.ExecuteNonQuery();
+
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
-                    throw; 
                 }
             }
             return rpta;
         }
 
+        public int eliminarReservas(int idReserva)
+        {
+            int rpta = 0;
+            using (SqlConnection cn = new SqlConnection(cadenaDato))
+            {
+                cn.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEliminarReserva", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", idReserva);
+                        rpta = cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception)
+                {
+                    rpta = 0;
+                }
+            }
+            return rpta;
+        }
+        public ReservasCLS recuperarReservas(int idReserva)
+        {
+            ReservasCLS oReservasCLS = null;
 
+            using (SqlConnection cn = new SqlConnection(cadenaDato))
+            {
+                cn.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspRecuperarReserva", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", idReserva);
+
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        if (dr != null && dr.Read())
+                        {
+                            oReservasCLS = new ReservasCLS
+                            {
+                                idReservas = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                idCliente = dr.IsDBNull(1) ? 0 : dr.GetInt32(1),
+                                idVehiculo = dr.IsDBNull(2) ? 0 : dr.GetInt32(2),
+                                fechaInicio = dr.IsDBNull(3) ? DateTime.Now : dr.GetDateTime(3),
+                                fechaFin = dr.IsDBNull(4) ? default(DateTime) : dr.GetDateTime(4),
+                                estado = dr.IsDBNull(5) ? "" : dr.GetString(5)
+                            };
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    cn.Close();
+                    oReservasCLS = null;
+                }
+            }
+            return oReservasCLS;
+        }
     }
 }

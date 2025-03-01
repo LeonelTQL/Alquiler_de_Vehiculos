@@ -11,6 +11,7 @@ async function listarReservas() {
         cabeceras: ["ID Reserva", "Nombre Cliente", "Vehículo", "Fecha Inicio", "Fecha Fin", "Estado"],
         propiedades: ["idReservas", "nombreCliente", "vehiculo", "fechaInicio", "fechaFin", "estado"],
         divContenedorTabla: "divContenedorTabla",
+        propiedadId: "idReservas",
         editar: true,
         eliminar: true
     };
@@ -42,97 +43,112 @@ function limpiarReservas(idFormulario) {
 function guardarReservas() {
     let forma = document.getElementById("frmGuardarReservas");
     let frm = new FormData(forma);
+    Confirmacion(undefined, undefined, function () {
+        fetchpost("Reservas/guardarReservas", "text", frm, function (res) {
+            console.log("Respuesta del servidor al guardar:", res);
+            if (res === "1") {
+                listarReservas();
+                Exito();
+            } else {
+                Error();
+            }
+        });
+    });
+}
 
+function cargarClientes() {
+    fetchGet("Cliente/listarClientes", "json", function (data) {
+        let clientesModificados = data.map(cliente => ({
+            idCliente: cliente.idCliente,
+            nombreCompleto: `${cliente.nombre} ${cliente.apellido}`
+        }));
 
-    fetchpost("Reservas/guardarReservas", "text", frm, function (res) {
-        console.log("Respuesta del servidor:", res);
-        if (res === "1") {
-            console.log("Reserva guardada correctamente.");
-            listarReservas();
+        llenarCombo(clientesModificados, "cboCliente", "idCliente", "nombreCompleto");
+    });
+}
+
+function cargarVehiculos() {
+    fetchGet("Vehiculo/listarVehiculos", "json", function (data) {
+        console.log("Vehículos recibidos:", data);
+
+        let vehiculosModificados = data.map(vehiculo => ({
+            idVehiculo: vehiculo.idVehiculo,
+            descripcion: `${vehiculo.marca} ${vehiculo.modelo}`
+        }));
+
+        llenarCombo(vehiculosModificados, "cboVehiculo", "idVehiculo", "descripcion");
+
+        llenarCombo(vehiculosModificados, "cboVehiculoModal", "idVehiculo", "descripcion");
+    });
+}
+
+function formatearFechaParaInput(fechaString) {
+
+    let fecha = new Date(fechaString);
+
+    
+    let mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    let dia = fecha.getDate().toString().padStart(2, '0');
+    return `${fecha.getFullYear()}-${mes}-${dia}`;
+}
+
+function Eliminar(id) {
+
+    Confirmacion("Eliminar", "Desea eliminar la reserva", function () {
+        fetchGet(`Reservas/eliminarReservas?id=${id}`, "text", function (data) {
+            if (data === "1") {
+                listarReservas();
+            } else {
+                alert("No se pudo eliminar la reserva");
+            }
+        });
+    });
+}
+function Editar(id) {
+    fetchGet("Reservas/recuperarReservas?idReserva=" + id, "json", function (reserva) {
+        console.log("Datos de la reserva recuperados:", reserva);
+
+        if (reserva) {
+            document.getElementById("txtidReservasModal").value = reserva.idReservas;
+            document.getElementById("txtClienteNombreModal").value = reserva.nombreCliente; 
+            document.getElementById("hiddenIdClienteModal").value = reserva.idCliente;
+            document.getElementById("cboVehiculoModal").value = reserva.idVehiculo;
+
+            if (reserva.fechaInicio) {
+                document.getElementById("txtfechaInicioModal").value = formatearFechaParaInput(reserva.fechaInicio);
+            }
+
+            if (reserva.fechaFin) {
+                document.getElementById("txtfechaFinModal").value = formatearFechaParaInput(reserva.fechaFin);
+            }
+
+            document.getElementById("cboEstadoModal").value = reserva.estado;
+
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                keyboard: false
+            });
+            myModal.show();
+            cerrarModal('exampleModal');
         } else {
-            console.error("Error al guardar la reserva. Respuesta inesperada:", res);
+            console.error('No se encontraron datos para la reserva con ID:', id);
         }
     });
 }
 
+function guardarEdicion() {
+    let frmEditar = document.getElementById("frmEditarReservas");
+    let frm = new FormData(frmEditar);
 
-async function cargarClientes() {
-    try {
-
-        const response = await fetch("Cliente/listarClientes");
-        if (!response.ok) throw new Error(`Error al cargar clientes: ${response.statusText}`);
-
-        const data = await response.json();
-        console.log("Respuesta de la API de clientes:", data);
-
-        if (!Array.isArray(data)) {
-            throw new Error("La respuesta de la API no es una lista de clientes.");
-        }
-
-        const clienteDropdown = document.getElementById("idCliente");
-        if (!clienteDropdown) {
-            throw new Error("No se encontró el elemento con ID 'idCliente'.");
-        }
-
-
-        clienteDropdown.innerHTML = '<option value="">Seleccione un cliente</option>';
-
-        data.forEach(cliente => {
-            if (!cliente.idCliente || !cliente.nombre) {
-                console.warn("Cliente inválido en la API:", cliente);
-                return;
+    Confirmacion("Confirmar", "¿Desea guardar los cambios?", function () {
+        fetchpost("Reservas/guardarReservas", "text", frm, function (res) {
+            if (res == "1") {
+                Exito();
+                listarReservas();
+                var modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
+                modal.hide();
+            } else {
+                Error();
             }
-            const option = document.createElement("option");
-            option.value = cliente.idCliente;
-            option.textContent = cliente.nombre;
-            clienteDropdown.appendChild(option);
         });
-
-
-    } catch (error) {
-        console.error("Error al cargar clientes:", error);
-    }
+    });
 }
-
-
-async function cargarVehiculos() {
-    try {
-        const response = await fetch("Vehiculo/listarVehiculos");
-        if (!response.ok) throw new Error("Error al cargar vehículos.");
-        const data = await response.json();
-        const vehiculoDropdown = document.getElementById("idVehiculo");
-
-        vehiculoDropdown.innerHTML = '<option value="">Seleccione un vehículo</option>';
-
-        data.forEach(vehiculo => {
-            const option = document.createElement("option");
-            option.value = vehiculo.idVehiculo;
-            option.textContent = vehiculo.marca;
-            vehiculoDropdown.appendChild(option);
-        });
-    } catch (error) {
-        console.error(error);
-        Error("No se pudieron cargar los vehículos.");
-    }
-}
-
-
-
-
-function validarFechas() {
-    const fechaInicio = new Date(document.getElementById("fechaInicio").value);
-    const fechaFin = new Date(document.getElementById("fechaFin").value);
-
-    if (fechaInicio > fechaFin) {
-        alert("La fecha de inicio no puede ser posterior a la fecha de fin");
-        return false;
-    }
-
-    if (fechaInicio < new Date()) {
-        // alert("No se pueden hacer reservas para fechas pasadas");
-        // return false;
-    }
-
-    return true;
-}
-

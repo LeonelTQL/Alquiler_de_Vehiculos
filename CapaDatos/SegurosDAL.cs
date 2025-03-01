@@ -93,7 +93,32 @@ namespace CapaDatos
             }
             return lista;
         }
+        public int guardarSeguros(SegurosCLS oSegurosCLS)
+        {
+            int rpta = 0;
+            using (SqlConnection cn = new SqlConnection(cadenaDato))
+            {
+                cn.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspGuardarSeguro", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", oSegurosCLS.idSeguro);
+                        cmd.Parameters.AddWithValue("@reservaId", oSegurosCLS.reservaId);
+                        cmd.Parameters.AddWithValue("@tipoSeguro", oSegurosCLS.tipoSeguro);
+                        cmd.Parameters.AddWithValue("@costo", oSegurosCLS.costo);
+                        rpta = cmd.ExecuteNonQuery();
 
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return rpta;
+        }
         public int eliminarSeguros(int idSeguro)
         {
             int rpta = 0;
@@ -115,6 +140,42 @@ namespace CapaDatos
                 }
             }
             return rpta;
+        }
+        public SegurosCLS recuperarSeguros(int idSeguro)
+        {
+            SegurosCLS oSegurosCLS = null;
+
+            using (SqlConnection cn = new SqlConnection(cadenaDato))
+            {
+                cn.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspRecuperarSeguro", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", idSeguro);
+
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        if (dr != null && dr.Read())
+                        {
+                            oSegurosCLS = new SegurosCLS
+                            {
+
+                                idSeguro = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                reservaId = dr.IsDBNull(1) ? 0 : dr.GetInt32(1),
+                                tipoSeguro = dr.IsDBNull(2) ? "" : dr.GetString(2),
+                                costo = dr.IsDBNull(3) ? 0 : dr.GetDecimal(3)
+                            };
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    cn.Close();
+                    oSegurosCLS = null;
+                }
+            }
+            return oSegurosCLS;
         }
     }
 }

@@ -24,11 +24,21 @@ namespace Alquiler_de_Vehiculos.Controllers
             PagosBL obj = new PagosBL();
             return obj.filtrarPagos(objPagos);
         }
+        public int guardarPagos(PagosCLS obj)
+        {
+            PagosBL oSeguros = new PagosBL();
+            return oSeguros.guardarPagos(obj);
+        }
 
         public int eliminarPagos(int id)
         {
             PagosBL obj = new PagosBL();
             return obj.eliminarPagos(id);
+        }
+        public PagosCLS recuperarPagos(int idPago)
+        {
+            PagosBL obj = new PagosBL();
+            return obj.recuperarPagos(idPago);
         }
     }
 }

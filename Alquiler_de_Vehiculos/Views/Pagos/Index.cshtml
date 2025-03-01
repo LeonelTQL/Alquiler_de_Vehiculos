@@ -16,5 +16,93 @@
     </div>
 </form>
 
+<form id="frmGuardarPagos" method="post">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="idReserva">Id de la Reserva:</label>
+                <input type="text" class="form-control" id="txtidReserva" name="reservaId">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="monto">Monto:</label>
+                <input type="text" class="form-control" id="txtMonto" name="monto">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="metodPago">Metodo de pago:</label>
+                <select class="form-control" id="cboMetodoPago" name="metodoPago">
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Trasferencia">Trasferencia</option>
+                    <option value="Tarjeta">Tarjeta</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="fechaPago">Fecha Pago:</label>
+                <input type="date" class="form-control" id="txtfechaPago" name="fechaPago">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="gap-2">
+                <button type="button" onclick="guardarPagos()" class="btn btn-primary">
+                    Guardar
+                </button>
+                <button type="button" onclick="limpiarPagos('frmGuardarPagos')" class="btn btn-danger">
+                    Limpiar
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Reserva</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmEditarPagos" method="post">
+                    <input type="hidden" class="form-control" id="txtidPagosModal" name="idPago">
+                    <input type="hidden" id="txtidReservaModal" name="reservaId">
+
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="monto">Monto:</label>
+                            <input class ="form-control" id="txtMontoModal" name="monto">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="fechaPago">Fecha Pago:</label>
+                            <input type="date" class="form-control" id="txtfechaPagoModal" name="fechaPago">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="metodopago">Metodo de Pago:</label>
+                            <select class="form-control" id="cboMetodoPagoModal" name="metodoPago">
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Trasferencia">Trasferencia</option>
+                                <option value="Tarjeta">Tarjeta</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarEdicion()" > Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div id="divtabla"></div>
 

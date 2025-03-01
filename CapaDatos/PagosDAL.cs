@@ -35,7 +35,7 @@ namespace CapaDatos
                                     vehiculo = drd.GetString(3),
                                     monto = drd.GetDecimal(4),
                                     metodoPago = drd.GetString(5),
-                                    fechaPago = DateOnly.FromDateTime(drd.GetDateTime(6))
+                                    fechaPago = drd.IsDBNull(6) ? DateTime.Now : drd.GetDateTime(6)
                                 };
                                 lista.Add(oPago);
                             }
@@ -80,8 +80,8 @@ namespace CapaDatos
                                     nombreCliente = dr.IsDBNull(2) ? "" : dr.GetString(2),
                                     vehiculo = dr.IsDBNull(3) ? "" : dr.GetString(3),
                                     monto = dr.IsDBNull(4) ? 0 : dr.GetDecimal(4),
-                                    metodoPago = dr.IsDBNull(3) ? "" : dr.GetString(5),
-                                    fechaPago = dr.IsDBNull(4) ? new DateOnly() : DateOnly.FromDateTime(dr.GetDateTime(6))
+                                    metodoPago = dr.IsDBNull(5) ? "" : dr.GetString(5),
+                                    fechaPago = dr.IsDBNull(6) ? DateTime.Now : dr.GetDateTime(6)
                                 };
                                 lista.Add(pagos);
                             }
@@ -95,7 +95,33 @@ namespace CapaDatos
             }
             return lista;
         }
+        public int guardarPagos(PagosCLS oPagosCLS)
+        {
+            int rpta = 0;
+            using (SqlConnection cn = new SqlConnection(cadenaDato))
+            {
+                cn.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspGuardarPago", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", oPagosCLS.idPago);
+                        cmd.Parameters.AddWithValue("@reservaId", oPagosCLS.reservaId);
+                        cmd.Parameters.AddWithValue("@monto", oPagosCLS.monto);
+                        cmd.Parameters.AddWithValue("@metodoPago", oPagosCLS.metodoPago);
+                        cmd.Parameters.AddWithValue("@fechaPago", oPagosCLS.fechaPago);
+                        rpta = cmd.ExecuteNonQuery();
 
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return rpta;
+        }
         public int eliminarPagos(int idPagos)
         {
             int rpta = 0;
@@ -117,6 +143,43 @@ namespace CapaDatos
                 }
             }
             return rpta;
+        }
+        public PagosCLS recuperarPagos(int idPagos)
+        {
+            PagosCLS oPagosCLS = null;
+
+            using (SqlConnection cn = new SqlConnection(cadenaDato))
+            {
+                cn.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspRecuperarPago", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", idPagos);
+
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        if (dr != null && dr.Read())
+                        {
+                            oPagosCLS = new PagosCLS
+                            {
+                                idPago = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                reservaId = dr.IsDBNull(1) ? 0 : dr.GetInt32(1),
+                                monto = dr.IsDBNull(2) ? 0 : dr.GetDecimal(2),
+                                metodoPago = dr.IsDBNull(3) ? "" : dr.GetString(3),
+                                fechaPago = dr.IsDBNull(4) ? DateTime.Now : dr.GetDateTime(4)
+                                
+                            };
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    cn.Close();
+                    oPagosCLS = null;
+                }
+            }
+            return oPagosCLS;
         }
     }
 }

@@ -16,60 +16,116 @@
 </form>
 
 <form id="frmGuardarReservas" method="post">
-    <!-- Campo oculto para el ID -->
-    <input type="hidden" name="idReservas" id="idReservas" value="0" />
-
-    <div class="row mb-3">
-        <!-- Dropdown para Cliente -->
-        <div class="col-md-6">
-            <label for="idCliente" class="form-label">Cliente</label>
-            <select class="form-select" id="idCliente" name="idCliente" required>
-                <option value="">-- Seleccione Cliente --</option>
-            </select>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="clienteId">Cliente:</label>
+                        <select class="form-control" id="cboCliente" name="idCliente">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="vehiculoId">Vehículo:</label>
+                        <select class="form-control" id="cboVehiculo" name="idVehiculo">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="fechaInicio">Fecha Inicio:</label>
+                        <input type="date" class="form-control" id="txtfechaInicio" name="fechaInicio">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="fechaFin">Fecha Fin:</label>
+                        <input type="date" class="form-control" id="txtfechaFin" name="fechaFin">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="estado">Estado:</label>
+                        <select class="form-control" id="cboEstado" name="estado">
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Confirmada">Confirmada</option>
+                            <option value="Cancelada">Cancelada</option>
+                            <option value="Completada">Completada</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="gap-2">
+                    <button type="button" onclick="guardarReservas()" class="btn btn-primary">
+                        Guardar
+                    </button>
+                    <button type="button" onclick="limpiarReservas('frmGuardarReservas')" class="btn btn-danger">
+                        Limpiar
+                    </button>
+                </div>
+            </div>
         </div>
-
-        <!-- Dropdown para Vehículo -->
-        <div class="col-md-6">
-            <label for="idVehiculo" class="form-label">Vehículo</label>
-            <select class="form-select" id="idVehiculo" name="idVehiculo" required>
-                <option value="">-- Seleccione Vehículo --</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <!-- Fecha Inicio -->
-        <div class="col-md-6">
-            <label for="fechaInicio" class="form-label">Fecha Inicio</label>
-            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required />
-        </div>
-
-        <!-- Fecha Fin -->
-        <div class="col-md-6">
-            <label for="fechaFin" class="form-label">Fecha Fin</label>
-            <input type="date" class="form-control" id="fechaFin" name="fechaFin" required />
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <!-- Estado -->
-        <div class="col-md-6">
-            <label for="estado" class="form-label">Estado</label>
-            <select class="form-select" id="estado" name="estado" required>
-                <option value="">-- Seleccione Estado --</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="Confirmada">Confirmada</option>
-                <option value="En Progreso">En Progreso</option>
-                <option value="Finalizada">Finalizada</option>
-                <option value="Cancelada">Cancelada</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <button type="button" class="btn btn-primary" onclick="guardarReservas()">Guardar</button>
-        <button type="button" class="btn btn-secondary" onclick="limpiarReservas('frmGuardarReservas')">Limpiar</button>
     </div>
 </form>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Reserva</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmEditarReservas" method="post">
+                    <input type="hidden" class="form-control" id="txtidReservasModal" name="idReservas">
+                    <input type="hidden" id="hiddenIdClienteModal" name="idCliente">
+                    <input type="hidden" class="form-control" id="txtClienteNombreModal">
+
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="vehiculoId">Vehículo:</label>
+                            <select class="form-control" id="cboVehiculoModal" name="idVehiculo">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="fechaInicio">Fecha Inicio:</label>
+                            <input type="date" class="form-control" id="txtfechaInicioModal" name="fechaInicio">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="fechaFin">Fecha Fin:</label>
+                            <input type="date" class="form-control" id="txtfechaFinModal" name="fechaFin">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="estado">Estado:</label>
+                            <select class="form-control" id="cboEstadoModal" name="estado">
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Confirmada">Confirmada</option>
+                                <option value="Cancelada">Cancelada</option>
+                                <option value="Completada">Completada</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarEdicion()">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="divtabla"></div>

@@ -13,8 +13,8 @@ namespace CapaEntidad
         public string nombreCliente { get; set; }
         public int idVehiculo { get; set; }
         public string vehiculo { get; set; }
-        public DateOnly fechaInicio { get; set; }
-        public DateOnly fechaFin { get; set; }
+        public DateTime fechaInicio { get; set; }
+        public DateTime fechaFin { get; set; }
         public string estado { get; set; }
         public string terminoBusqueda { get; set; }
 

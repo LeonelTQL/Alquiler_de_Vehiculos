@@ -24,11 +24,20 @@ namespace Alquiler_de_Vehiculos.Controllers
             SegurosBL obj = new SegurosBL();
             return obj.filtrarSeguros(objSeguros);
         }
-
+        public int guardarSeguros(SegurosCLS obj)
+        {
+            SegurosBL oSeguros = new SegurosBL();
+            return oSeguros.guardarSeguros(obj);
+        }
         public int eliminarSeguros(int id)
         {
             SegurosBL obj = new SegurosBL();
             return obj.eliminarSeguros(id);
+        }
+        public SegurosCLS recuperarSeguros(int idSeguro)
+        {
+            SegurosBL obj = new SegurosBL();
+            return obj.recuperarSeguros(idSeguro);
         }
     }
 }
