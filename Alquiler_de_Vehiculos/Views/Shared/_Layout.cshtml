@@ -12,39 +12,64 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Alquiler_de_Vehiculos</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+        <nav class="navbar">
+            <div class="navbar-brand">Alquiler de Vehículos</div>
+            <ul class="navbar-nav">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("admin"))
+                    {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" href="/Admin/Dashboard">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Reservas" asp-action="Index">Reservas</a>
+                            <a class="nav-link" href="/Cliente">Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Cliente</a>
+                            <a class="nav-link" href="/Vehiculo">Vehículos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vehiculo" asp-action="Index">Vehiculo</a>
+                            <a class="nav-link" href="/Reservas">Reservas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Empleados" asp-action="Index">Empleados</a>
+                            <a class="nav-link" href="/Pagos">Pagos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pagos" asp-action="Index">Pagos</a>
+                            <a class="nav-link" href="/Seguros">Seguros</a>
+                        </li>
+                    }
+                    else if (User.IsInRole("empleado"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Empleado/Dashboard">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Seguros" asp-action="Index">Seguros</a>
+                            <a class="nav-link" href="/Cliente">Clientes</a>
                         </li>
-                    </ul>
-                </div>
-            </div>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Reservas">Reservas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Pagos">Pagos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Vehiculo">Vehículos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Seguros">Seguros</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Account/Logout">Cerrar Sesión</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Login/Login">Iniciar Sesión</a>
+                    </li>
+                }
+            </ul>
         </nav>
     </header>
     <div class="container">
