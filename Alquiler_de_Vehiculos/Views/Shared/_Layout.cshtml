@@ -9,7 +9,12 @@
     <link href="~/font-awesome/css/all.css" rel="stylesheet" />
 	<link href="~/css/login.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -46,12 +51,12 @@
                         <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
                     </a>
                 </li>
-                <div class="switch">
+                <li class="switch">
                     <label class="switch">
                         <input type="checkbox" id="modeToggle">
                         <span class="slider"></span>
                     </label>
-                </div>
+                </li>
             </ul>
         </nav>
     }
@@ -181,7 +186,6 @@
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" required>
                         </div>
                         <button type="submit" class="btn btn-success">Registrarse</button>
                     </form>
@@ -194,17 +198,21 @@
             @RenderBody()
         </main>
     </div>
+    <input type="hidden" id="hdfOculto" value="@Url.Content("~")" />
+    
     <script>
-        // Botón deslizante
         const toggleSwitch = document.querySelector('.switch input');
         const body = document.body;
 
-        // Al cambiar el estado del switch, se activa el modo oscuro
         toggleSwitch.addEventListener('change', function() {
             body.classList.toggle('dark-mode', this.checked);
             document.querySelector('header').classList.toggle('dark-mode', this.checked);
             document.querySelector('footer').classList.toggle('dark-mode', this.checked);
             document.querySelector('.side-nav').classList.toggle('dark-mode', this.checked);
+            // Aseguramos que los DataTables también se actualicen con el modo oscuro
+            if (this.checked) {
+                // Puedes agregar lógica para inicializar o refrescar el DataTable en modo oscuro si es necesario
+            }
         });
     </script>
 
