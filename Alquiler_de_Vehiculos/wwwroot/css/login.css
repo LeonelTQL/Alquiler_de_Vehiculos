@@ -150,7 +150,7 @@ body {
 }
 
 .side-nav.dark-mode h1 {
-    color: rgba(255,255,255,1) /* Color del título en modo oscuro */
+    color: # /* Color del título en modo oscuro */
 }
 
 /* Contenido de la página */
@@ -241,53 +241,4 @@ input:checked + .slider {
 
     input:checked + .slider:before {
         transform: translateX(26px);
-    }
-/* Estilos para el DataTable en modo oscuro */
-body.dark-mode .dataTable {
-    background-color: #333333; /* Fondo oscuro para DataTable */
-    color: #e0e0e0; /* Color de texto claro */
-}
-
-    body.dark-mode .dataTable th,
-    body.dark-mode .dataTable td {
-        border-color: #444444; /* Bordes más oscuros */
-    }
-
-    body.dark-mode .dataTable thead {
-        background-color: #444444; /* Fondo oscuro para el encabezado */
-        color: #ffffff; /* Color de texto en el encabezado */
-    }
-
-    body.dark-mode .dataTable tr:hover {
-        background-color: #555555; /* Fondo de fila cuando se pasa el mouse */
-    }
-
-    body.dark-mode .dataTable thead th {
-        color: #ffffff; /* Color de texto en el encabezado */
-    }
-
-body.dark-mode .dataTable_filter input {
-    background-color: #555555; /* Fondo oscuro para la barra de búsqueda */
-    color: #e0e0e0; /* Texto claro en la barra de búsqueda */
-    border-color: #666666; /* Borde más oscuro */
-}
-
-body.dark-mode .dataTable_length select {
-    background-color: #555555; /* Fondo oscuro para el selector de registros */
-    color: #e0e0e0; /* Texto claro en el selector */
-    border-color: #666666; /* Borde más oscuro */
-}
-
-body.dark-mode .dataTable_info {
-    color: #e0e0e0; /* Color de texto para la información del DataTable */
-}
-
-body.dark-mode .dataTable_paginate .paginate_button {
-    background-color: #444444; /* Fondo oscuro para los botones de paginación */
-    color: #ffffff; /* Texto claro en los botones */
-    border-color: #666666; /* Borde más oscuro */
-}
-
-    body.dark-mode .dataTable_paginate .paginate_button:hover {
-        background-color: #555555; /* Fondo de los botones cuando se pasa el mouse */
     }

@@ -51,13 +51,14 @@
                         <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
                     </a>
                 </li>
-                <li class="switch">
-                    <label class="switch">
-                        <input type="checkbox" id="modeToggle">
-                        <span class="slider"></span>
-                    </label>
-                </li>
+                
             </ul>
+            <div class="switch">
+                <label class="switch">
+                    <input type="checkbox" id="modeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </nav>
     }
 
@@ -74,59 +75,69 @@
 
         <!-- Carrusel de imágenes -->
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-               
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
-                    </div>
+            @{
+                var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+                var action = ViewContext.RouteData.Values["action"]?.ToString();
+            }
+
+            <!-- Carrusel solo en Login y Vehículos -->
+            @if ((controller == "Login" && action == "Login") || (controller == "Vehiculo" && action == "Index"))
+            {
+                <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="/img/jeep-negro.webp" class="d-block w-100" alt="Vehículo 1" width="500" height="500" />
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Alquiler de Vehículos</h5>
-                                <a href="#reservar" class="btn btn-primary">Reserva ¡Ahora!</a>
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
                             </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="/img/jeep-rojo.jpeg" class="d-block w-100" alt="Vehículo 2" width="500" height="500" />
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Alquiler de Vehículos</h5>
-                                <a href="#reservar" class="btn btn-primary">Reserva ¡Ahora!</a>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="/img/jeep-negro.webp" class="d-block w-100" alt="Vehículo 1" width="500" height="500" />
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>Alquiler de Vehículos</h5>
+                                        <a href="#reservar" class="btn btn-primary">Reserva ¡Ahora!</a>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="/img/jeep-rojo.jpeg" class="d-block w-100" alt="Vehículo 2" width="500" height="500" />
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>Alquiler de Vehículos</h5>
+                                        <a href="#reservar" class="btn btn-primary">Reserva ¡Ahora!</a>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="/img/Jeep_amarillo.jpg" class="d-block w-100" alt="Vehículo 4" width="500" height="500">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>Alquiler de Vehículos</h5>
+                                        <a href="#reservar" class="btn btn-primary">Reserva ¡Ahora!</a>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="/img/alquiler-autored.jpg" class="d-block w-100" alt="Vehículo 5" width="500" height="500">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>Alquiler de Vehículos</h5>
+                                        <a href="#reservar" class="btn btn-primary">Reserva ¡Ahora!</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="carousel-item">
-                            <img src="/img/Jeep_amarillo.jpg" class="d-block w-100" alt="Vehículo 4" width="500" height="500">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Alquiler de Vehículos</h5>
-                                <a href="#reservar" class="btn btn-primary">Reserva ¡Ahora!</a>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="/img/alquiler-autored.jpg" class="d-block w-100" alt="Vehículo 5" width="500" height="500">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Alquiler de Vehículos</h5>
-								<a href="#reservar" class="btn btn-primary">Reserva ¡Ahora! </a>
-                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
                 </div>
-            </div>
+            }
+
             
         </div>
 
@@ -165,34 +176,6 @@
         </div>
     </div>
 
-    <!-- Modal de Registrarse -->
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLabel">Registrarse</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Formulario de registro -->
-                    <form>
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Nombre de Usuario</label>
-                            <input type="text" class="form-control" id="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                        </div>
-                        <button type="submit" class="btn btn-success">Registrarse</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="content">
         <main role="main" class="pb-3">
             @RenderBody()
