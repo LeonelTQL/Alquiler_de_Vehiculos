@@ -136,6 +136,7 @@ function pintar(objConfiguration) {
         contenido += generarTabla(res);
         contenido += "</div>";
         document.getElementById("divtabla").innerHTML = contenido;
+        new DataTable('#myTable')
     });
 }
 
@@ -145,7 +146,7 @@ function generarTabla(res) {
     let gPropiedades = objconfigurationGlobal.propiedades;
     let nroRegistros = res.length;
 
-    contenido += "<table class='table'>";
+    contenido += "<table id='myTable'class='table'>";
     contenido += "<thead><tr>";
 
     for (let i = 0; i < gCabeceras.length; i++) {

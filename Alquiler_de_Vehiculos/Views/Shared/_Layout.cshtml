@@ -46,6 +46,12 @@
                         <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
                     </a>
                 </li>
+                <div class="switch">
+                    <label class="switch">
+                        <input type="checkbox" id="modeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
             </ul>
         </nav>
     }
@@ -119,41 +125,7 @@
             
         </div>
 
-        <!-- Secciones de Vehículos Disponibles, Reservas y Servicios -->
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        
-                        <div class="card-body">
-                            <h5 class="card-title">Vehículos Disponibles</h5>
-                            <p class="card-text">Descubre los vehículos disponibles para alquilar con nosotros.</p>
-                            <a href="#" class="btn btn-primary">Ver Vehículos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        
-                        <div class="card-body">
-                            <h5 class="card-title">Reservas</h5>
-                            <p class="card-text">Realiza tu reserva fácilmente y sin complicaciones.</p>
-                            <a href="#" class="btn btn-primary">Hacer Reserva</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        
-                        <div class="card-body">
-                            <h5 class="card-title">Servicios</h5>
-                            <p class="card-text">Explora nuestros servicios adicionales para mejorar tu experiencia.</p>
-                            <a href="#" class="btn btn-primary">Ver Servicios</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
 
         <footer class="border-top footer text-muted">
             <div class="container">
@@ -222,6 +194,20 @@
             @RenderBody()
         </main>
     </div>
+    <script>
+        // Botón deslizante
+        const toggleSwitch = document.querySelector('.switch input');
+        const body = document.body;
+
+        // Al cambiar el estado del switch, se activa el modo oscuro
+        toggleSwitch.addEventListener('change', function() {
+            body.classList.toggle('dark-mode', this.checked);
+            document.querySelector('header').classList.toggle('dark-mode', this.checked);
+            document.querySelector('footer').classList.toggle('dark-mode', this.checked);
+            document.querySelector('.side-nav').classList.toggle('dark-mode', this.checked);
+        });
+    </script>
+
 
     <script>
         $(function() {

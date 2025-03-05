@@ -1,40 +1,41 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* Fondo con imagen */
 body {
-  margin-bottom: 60px;
-}
-url("https://fonts.googleapis.com/css2?family=Grandstander&display=swap");
-body {
-    font-family: "Grandstander", cursive;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 12%, rgba(154,138,182,1) 30%, rgba(68,21,148,1) 46%, rgba(42,19,95,1) 56%, rgba(35,42,76,1) 77%);
+    background-size: cover; /* Hace que la imagen cubra toda la pantalla */
+    height: 100vh; /* Hace que el fondo ocupe toda la pantalla */
     display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
+    /* Estilos para el modo oscuro */
+    body.dark-mode {
+        background-color: #121212; /* Fondo oscuro */
+        color: #e0e0e0; /* Texto claro */
+    }
+
+header.dark-mode, footer.dark-mode {
+    background-color: #333333; /* Fondo oscuro para el header y footer */
+}
+
+/* Navbar - Barra lateral */
 .side-nav {
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
     width: 200px;
-    background-color: mediumpurple;
+    background-color: mediumpurple; /* Fondo en modo claro */
     padding: 40px 0;
+    transition: background-color 0.3s; /* Transición suave al cambiar entre modos */
 }
+
+    .side-nav.dark-mode {
+        background-color: #333333; /* Fondo oscuro para la barra lateral en modo oscuro */
+    }
 
 .nav-menu {
     list-style: none;
@@ -44,49 +45,61 @@ body {
 .nav-item {
     position: relative;
     padding: 10px 20px;
+    transition: background-color 0.3s; /* Transición suave para el hover */
 }
 
+    /* Estilo del item activo */
     .nav-item.active {
-        background-color: #fff;
+        background-color: #f1f1f1; /* Fondo claro cuando está activo en modo claro */
         box-shadow: 0px -3px rgba(0, 0, 0, 0.2), 0px 3px rgba(0, 0, 0, 0.2);
     }
 
         .nav-item.active a {
-            color: mediumpurple;
+            color: mediumpurple; /* Color del texto del item activo en modo claro */
         }
 
-    .nav-item a {
-        text-decoration: none;
-        color: #fff;
+/* Estilo del item activo en modo oscuro */
+.side-nav.dark-mode .nav-item.active {
+    background-color: #444444; /* Fondo oscuro para el item activo en modo oscuro */
+}
+
+    .side-nav.dark-mode .nav-item.active a {
+        color: #e0e0e0; /* Color claro del texto en el item activo en modo oscuro */
     }
 
-.side-nav .nav-item.active::before {
-    content: "";
-    position: absolute;
-    background-color: transparent;
-    bottom: 100%;
-    right: 0;
-    height: 150%;
-    width: 20px;
-    border-bottom-right-radius: 25px;
-    box-shadow: 0 20px 0 0 #fff;
+/* Estilo para los enlaces */
+.nav-item a {
+    text-decoration: none;
+    color: #fff; /* Color de los enlaces en modo claro */
+    transition: color 0.3s; /* Transición suave para el color de los enlaces */
 }
 
-.side-nav .nav-item.active::after {
-    content: "";
-    position: absolute;
-    background-color: transparent;
-    top: 100%;
-    right: 0;
-    height: 150%;
-    width: 20px;
-    border-top-right-radius: 25px;
-    box-shadow: 0 -20px 0 0 #fff;
+    .nav-item a:hover {
+        color: #ffab00; /* Color del enlace cuando se pasa el ratón */
+    }
+
+/* Enlaces en el modo oscuro */
+.side-nav.dark-mode .nav-item a {
+    color: #e0e0e0; /* Enlaces de color claro en el modo oscuro */
 }
 
+    .side-nav.dark-mode .nav-item a:hover {
+        color: #ffab00; /* Color del enlace cuando se pasa el ratón en el modo oscuro */
+    }
+
+/* Estilo para el logo o título de la barra lateral */
+.side-nav h1 {
+    color: #fff; /* Color del título en modo claro */
+}
+
+.side-nav.dark-mode h1 {
+    color: rgb(255,255,255); /* Color del título en modo oscuro */
+    
+}
+
+/* Contenido de la página */
 .content {
     margin-left: 220px;
     padding: 20px;
     width: calc(100% - 220px);
 }
-

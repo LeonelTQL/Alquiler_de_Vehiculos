@@ -1,8 +1,5 @@
-﻿
-
-/* Fondo con imagen */
+﻿/* Fondo con imagen (modo claro por defecto) */
 body {
-    background: rgb(255,255,255);
     background: linear-gradient(90deg, rgba(255,255,255,1) 12%, rgba(154,138,182,1) 30%, rgba(68,21,148,1) 46%, rgba(42,19,95,1) 56%, rgba(35,42,76,1) 77%);
     background-size: cover; /* Hace que la imagen cubra toda la pantalla */
     height: 100vh; /* Hace que el fondo ocupe toda la pantalla */
@@ -10,8 +7,9 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Poppins', sans-serif;
+    color: #000000; /* Color de texto por defecto (modo claro) */
+    transition: background-color 0.3s, color 0.3s;
 }
-
 
 /* Efecto Glassmorphism */
 .login-container {
@@ -25,7 +23,6 @@ body {
     text-align: center;
 }
 
-    /* Título */
     .login-container h2 {
         color: white;
         font-weight: 600;
@@ -81,3 +78,167 @@ body {
     color: white;
     font-weight: bold;
 }
+/* Navbar - Barra lateral */
+.side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 200px;
+    background-color: mediumpurple; /* Fondo en modo claro */
+    padding: 40px 0;
+    transition: background-color 0.3s; /* Transición suave al cambiar entre modos */
+}
+
+    .side-nav.dark-mode {
+        background-color: #333333; /* Fondo oscuro para la barra lateral en modo oscuro */
+    }
+
+.nav-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-item {
+    position: relative;
+    padding: 10px 20px;
+    transition: background-color 0.3s; /* Transición suave para el hover */
+}
+
+    /* Estilo del item activo */
+    .nav-item.active {
+        background-color: #f1f1f1; /* Fondo claro cuando está activo en modo claro */
+        box-shadow: 0px -3px rgba(0, 0, 0, 0.2), 0px 3px rgba(0, 0, 0, 0.2);
+    }
+
+        .nav-item.active a {
+            color: mediumpurple; /* Color del texto del item activo en modo claro */
+        }
+
+/* Estilo del item activo en modo oscuro */
+.side-nav.dark-mode .nav-item.active {
+    background-color: #444444; /* Fondo oscuro para el item activo en modo oscuro */
+}
+
+    .side-nav.dark-mode .nav-item.active a {
+        color: rgba(255,255,255,1) /* Color claro del texto en el item activo en modo oscuro */
+    }
+
+/* Estilo para los enlaces */
+.nav-item a {
+    text-decoration: none;
+    color: #fff; /* Color de los enlaces en modo claro */
+    transition: color 0.3s; /* Transición suave para el color de los enlaces */
+}
+
+    .nav-item a:hover {
+        color: #ffab00; /* Color del enlace cuando se pasa el ratón */
+    }
+
+/* Enlaces en el modo oscuro */
+.side-nav.dark-mode .nav-item a {
+    color: rgba(255,255,255,1) /* Enlaces de color claro en el modo oscuro */
+}
+
+    .side-nav.dark-mode .nav-item a:hover {
+        color: #ffab00; /* Color del enlace cuando se pasa el ratón en el modo oscuro */
+    }
+
+/* Estilo para el logo o título de la barra lateral */
+.side-nav h1 {
+    color: #fff; /* Color del título en modo claro */
+}
+
+.side-nav.dark-mode h1 {
+    color: rgba(255,255,255,1) /* Color del título en modo oscuro */
+}
+
+/* Contenido de la página */
+.content {
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+}
+
+
+/* Estilo para el modo oscuro */
+body.dark-mode {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 14%, rgba(102,98,108,1) 29%, rgba(30,27,34,1) 46%, rgba(11,4,27,1) 56%, rgba(3,5,15,1) 77%);
+    color: #e0e0e0;
+}
+
+/* Cambiar color de fondo y texto en los headers y footers en modo oscuro */
+header.dark-mode, footer.dark-mode {
+    background-color: #333333;
+    color: #e0e0e0;
+}
+
+/* Cambiar color de los botones e inputs en modo oscuro */
+body.dark-mode .btn-login {
+    background: #333333;
+    color: #fff;
+}
+
+body.dark-mode .form-control {
+    background: rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+    body.dark-mode .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+/* Estilos para los enlaces en modo oscuro */
+body.dark-mode a {
+    color: #66b3ff;
+}
+
+body.dark-mode .register-link {
+    color: #66b3ff;
+}
+
+/* Estilos para el botón deslizante */
+.switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: relative;
+    cursor: pointer;
+    width: 60px;
+    height: 34px;
+    border-radius: 50px;
+    background-color: #ccc;
+    transition: 0.4s;
+}
+
+    .slider:before {
+        content: "";
+        position: absolute;
+        height: 26px;
+        width: 26px;
+        border-radius: 50px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+    }
+
+input:checked + .slider {
+    background-color: #4caf50;
+}
+
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
