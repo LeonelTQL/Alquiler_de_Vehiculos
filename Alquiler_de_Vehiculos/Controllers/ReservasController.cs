@@ -1,17 +1,20 @@
 ﻿using CapaEntidad;
 using CapaNegocio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alquiler_de_Vehiculos.Controllers
 {
     public class ReservasController : Controller
     {
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Index()
         {
             ReservasBL obj = new ReservasBL();
             var reservas = obj.listarReservas();
             return View(reservas);
         }
+
 
         public List<ReservasCLS> listarReservas()
         {

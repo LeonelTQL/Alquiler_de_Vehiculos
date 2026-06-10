@@ -1,17 +1,25 @@
 ﻿using CapaEntidad;
 using CapaNegocio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alquiler_de_Vehiculos.Controllers
 {
     public class SegurosController : Controller
     {
+
         public IActionResult Index()
         {
             SegurosBL obj = new SegurosBL();
             var Seguros = obj.listarSeguros();
             return View(Seguros);
         }
+
+        public IActionResult seguroCliente()
+        {
+            return View();
+        }
+
         public List<SegurosCLS> listarSeguros()
         {
             SegurosBL obj = new SegurosBL();

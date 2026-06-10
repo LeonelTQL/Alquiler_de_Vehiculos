@@ -12,6 +12,10 @@ namespace Alquiler_de_Vehiculos.Controllers
             var Vehiculos = obj.listarVehiculos();
             return View(Vehiculos);
         }
+        public IActionResult vehiculoCliente()
+        {
+            return View();
+        }
 
         public List<VehiculoCLS> listarVehiculos()
         {

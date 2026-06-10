@@ -1,0 +1,44 @@
+﻿.card {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    background-color: #fff;
+}
+
+.img-carnet {
+    width: 140px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    font-weight: bold;
+}
+
+input.form-control {
+    border-radius: 12px;
+}
+
+button {
+    border-radius: 12px;
+    padding: 10px 20px;
+}
+
+    button:focus {
+        box-shadow: none;
+    }
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+}

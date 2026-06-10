@@ -41,11 +41,44 @@ function guardarVehiculos() {
     let forma = document.getElementById("frmGuardarVehiculos");
     let frm = new FormData(forma);
 
+    let marca = frm.get("marca").trim();
+    let modelo = frm.get("modelo").trim();
+    let anio = frm.get("anio").trim();
+    let precio = frm.get("precio").trim();
+    let estado = frm.get("estado").trim();
+
+    if (!marca.trim()) {
+        Error("La Marca es obligatoria.");
+        return;
+    }
+    if (!modelo.trim()) {
+        Error("El Modelo es obligatorio.");
+        return;
+    }
+    if (!anio.trim()) {
+        Error("El Año es obligatorio.");
+        return;
+    }
+    if (!precio.trim()) {
+        Error("El Precio es obligatorio.");
+        return;
+    }
+    if (!estado.trim()) {
+        Error("El Estado es obligatorio.");
+        return;
+    }
+
+    if (isNaN(precio) || parseFloat(precio) <= 0) {
+        Error("El Precio debe ser un número positivo.");
+        return;
+    }
     Confirmacion(undefined, undefined, function () {
         fetchpost("Vehiculo/guardarVehiculos", "text", frm, function (res) {
             if (res === "1") {
                 listarVehiculos();
-
+                Exito("Vehiculo registrado con éxito");
+            } else {
+                Error("No se pudo guardar Vehiculo");
             }
         });
     });
@@ -56,9 +89,10 @@ function Eliminar(id) {
     Confirmacion("Eliminar", "Desea eliminar el Vehiculo", function () {
         fetchGet(`Vehiculo/eliminarVehiculos?id=${id}`, "text", function (data) {
             if (data === "1") {
+                Exito("Vehiculo eliminado con éxito");
                 listarVehiculos();
             } else {
-                alert("No se pudo eliminar el Vehiculo");
+                Error("No se pudo eliminar el Vehiculo");
             }
         });
     });
@@ -82,7 +116,7 @@ function Editar(id) {
             myModal.show();
             cerrarModal('exampleModal');
         } else {
-            console.error('No se encontraron datos para el vehiculo con ID:', id);
+            Error('No se encontraron datos para el vehiculo con ID:', id);
         }
     });
 }
@@ -91,16 +125,46 @@ function guardarEdicion() {
     let frmEditar = document.getElementById("frmEditarVehiculos");
     let frm = new FormData(frmEditar);
 
+    let marca = frm.get("marca").trim();
+    let modelo = frm.get("modelo").trim();
+    let anio = frm.get("anio").trim();
+    let precio = frm.get("precio").trim();
+    let estado = frm.get("estado").trim();
 
+    if (!marca.trim()) {
+        Error("La Marca es obligatoria.");
+        return;
+    }
+    if (!modelo.trim()) {
+        Error("El Modelo es obligatorio.");
+        return;
+    }
+    if (!anio.trim()) {
+        Error("El Año es obligatorio.");
+        return;
+    }
+    if (!precio.trim()) {
+        Error("El Precio es obligatorio.");
+        return;
+    }
+    if (!estado.trim()) {
+        Error("El Estado es obligatorio.");
+        return;
+    }
+
+    if (isNaN(precio) || parseFloat(precio) <= 0) {
+        Error("El Precio debe ser un número positivo.");
+        return;
+    }
     Confirmacion("Confirmar", "¿Desea guardar los cambios?", function () {
         fetchpost("Vehiculo/guardarVehiculos", "text", frm, function (res) {
             if (res == "1") {
-                Exito();
+                Exito("Vehiculo editado correctamente");
                 listarVehiculos();
                 var modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
                 modal.hide();
             } else {
-                Error();
+                Error("No se puedo editar el vehiculo");
             }
         });
     });

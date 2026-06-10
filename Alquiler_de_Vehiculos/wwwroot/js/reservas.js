@@ -98,8 +98,9 @@ function Eliminar(id) {
         fetchGet(`Reservas/eliminarReservas?id=${id}`, "text", function (data) {
             if (data === "1") {
                 listarReservas();
+                Exito("Reserva eliminada correctamente");
             } else {
-                alert("No se pudo eliminar la reserva");
+                Error("No se pudo eliminar la reserva");
             }
         });
     });
@@ -131,6 +132,7 @@ function Editar(id) {
             cerrarModal('exampleModal');
         } else {
             console.error('No se encontraron datos para la reserva con ID:', id);
+            Error("No se encontraron datos para la reserva");
         }
     });
 }
@@ -142,12 +144,12 @@ function guardarEdicion() {
     Confirmacion("Confirmar", "¿Desea guardar los cambios?", function () {
         fetchpost("Reservas/guardarReservas", "text", frm, function (res) {
             if (res == "1") {
-                Exito();
+                Exito("Reserva editada correctamente");
                 listarReservas();
                 var modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
                 modal.hide();
             } else {
-                Error();
+                Error("No se puedo editar la reserva");
             }
         });
     });

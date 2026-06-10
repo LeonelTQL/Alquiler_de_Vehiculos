@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewData["Title"] = "seguroCliente";
+}
+
+<style>
+    .card {
+        margin: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .card-body {
+        text-align: center;
+    }
+
+        .card-body p {
+            font-size: 1.1rem;
+        }
+
+    .card-footer {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<div class="container my-5">
+    <h2 class="text-center">Elige tu Seguro</h2>
+
+    <div class="row">
+        <!-- Card Básico -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Básico
+                </div>
+                <div class="card-body">
+                    <p><strong>$100</strong> - Cobertura básica para tu vehículo.</p>
+                    <p>Ideal para alquileres cortos.</p>
+                    <ul>
+                        <li>Cubre daños al vehículo por accidentes menores.</li>
+                        <li>Cubre daños a terceros (limitados).</li>
+                        <li>No cubre robo ni daños por desastres naturales.</li>
+                    </ul>
+                    <p><strong>No cubre:</strong> Robo, desastres naturales, daños a la propiedad personal.</p>
+                    <button class="btn btn-success" onclick="guardarSeguro('Básico', 100)">Seleccionar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Intermedio -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-warning text-white">
+                    Intermedio
+                </div>
+                <div class="card-body">
+                    <p><strong>$200</strong> - Cobertura intermedia con protección adicional.</p>
+                    <p>Para viajes largos o mayor seguridad.</p>
+                    <ul>
+                        <li>Cubre daños al vehículo por accidentes.</li>
+                        <li>Cubre daños a terceros.</li>
+                        <li>Cubre robo parcial o total del vehículo.</li>
+                        <li>No cubre daños por desastres naturales.</li>
+                    </ul>
+                    <p><strong>No cubre:</strong> Desastres naturales, daños a la propiedad personal.</p>
+                    <button class="btn btn-warning" onclick="guardarSeguro('Intermedio', 200)">Seleccionar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Premium -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    Premium
+                </div>
+                <div class="card-body">
+                    <p><strong>$300</strong> - Cobertura premium con todas las ventajas.</p>
+                    <p>La opción más completa y segura.</p>
+                    <ul>
+                        <li>Cubre daños al vehículo por accidentes, incluyendo daños mayores.</li>
+                        <li>Cubre daños a terceros sin límite de monto.</li>
+                        <li>Cubre robo parcial y total del vehículo.</li>
+                        <li>Cubre daños por desastres naturales como tormentas o inundaciones.</li>
+                        <li>Cubre pérdida de pertenencias personales dentro del vehículo.</li>
+                    </ul>
+                    <p><strong>No cubre:</strong> Actos de vandalismo, conducción bajo efectos de alcohol o drogas.</p>
+                    <button class="btn btn-danger" onclick="guardarSeguro('Premium', 300)">Seleccionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Formulario oculto para guardar el seguro -->
+    <form id="frmGuardarSeguros" style="display: none;">
+        <input type="hidden" id="tipoSeguro" name="tipoSeguro" />
+        <input type="hidden" id="costo" name="costo" />
+        <input type="hidden" id="reservaId" name="reservaId" value="1" />
+    </form>
+
+</div>
+
+
+<script src="~/js/seguros.js"></script>
+<script src="~/js/generic.js"></script>
+
+<script>
+    function guardarSeguro(tipoSeguro, costo) {
+        // Establecer los valores en el formulario
+        document.getElementById("tipoSeguro").value = tipoSeguro;
+        document.getElementById("costo").value = costo;
+
+        // Llamar a la función para guardar el seguro
+        guardarSeguros();
+    }
+</script>

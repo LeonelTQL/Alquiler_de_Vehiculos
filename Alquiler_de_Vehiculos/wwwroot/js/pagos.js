@@ -40,6 +40,18 @@ function limpiarPagos(idFormulario) {
 function guardarPagos() {
     let forma = document.getElementById("frmGuardarPagos");
     let frm = new FormData(forma);
+    let idReserva = frm.get("reservaId");
+    let monto = frm.get("monto");
+
+    if (!idReserva.trim()) {
+        Error("El ID de la Reserva es obligatorio.");
+        return;
+    }
+
+    if (!monto.trim()) {
+        Error("El Monto es obligatorio.");
+        return;
+    }
     Confirmacion(undefined, undefined, function () {
         fetchpost("Pagos/guardarPagos", "text", frm, function (res) {
             console.log("Respuesta del servidor al guardar:", res);
@@ -59,8 +71,9 @@ function Eliminar(id) {
         fetchGet(`Pagos/eliminarPagos?id=${id}`, "text", function (data) {
             if (data === "1") {
                 listarPagos();
+                Exito("Pago eliminado correctamente");
             } else {
-                alert("No se pudo eliminar el pago");
+                Error("No se pudo eliminar el pago");
             }
         });
     });
@@ -68,7 +81,6 @@ function Eliminar(id) {
 
 function Editar(id) {
     fetchGet("Pagos/recuperarPagos?idPago=" + id, "json", function (pago) {
-        console.log("Datos de la pago recuperados:", pago);
 
         if (pago) {
             document.getElementById("txtidPagosModal").value = pago.idPago;
@@ -88,7 +100,7 @@ function Editar(id) {
             myModal.show();
             cerrarModal('exampleModal');
         } else {
-            console.error('No se encontraron datos para la reserva con ID:', id);
+            Error('No se encontraron datos para la reserva con ID:', id);
         }
     });
 }
@@ -104,16 +116,32 @@ function formatearFechaParaInput(fechaString) {
 function guardarEdicion() {
     let frmEditar = document.getElementById("frmEditarPagos");
     let frm = new FormData(frmEditar);
+    let idReserva = frm.get("reservaId");
+    let monto = frm.get("monto");
 
+    if (!idReserva.trim()) {
+        Error("El ID de la Reserva es obligatorio.");
+        return;
+    }
+
+    if (!monto.trim()) {
+        Error("El Monto es obligatorio.");
+
+        return;
+    }
+    if (isNaN(monto) || parseFloat(monto) <= 0) {
+        Error("El Monto debe ser un número positivo.");
+        return;
+    }
     Confirmacion("Confirmar", "¿Desea guardar los cambios?", function () {
         fetchpost("Pagos/guardarPagos", "text", frm, function (res) {
             if (res == "1") {
-                Exito();
+                Exito("Pago editado correctamente");
                 listarPagos();
                 var modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
                 modal.hide();
             } else {
-                Error();
+                Error("No se pudo editar el pago");
             }
         });
     });

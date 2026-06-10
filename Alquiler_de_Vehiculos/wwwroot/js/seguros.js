@@ -40,6 +40,11 @@ function limpiarSeguros(idFormulario) {
 function guardarSeguros() {
     let forma = document.getElementById("frmGuardarSeguros");
     let frm = new FormData(forma);
+    let idReserva = frm.get("reservaId");
+    if (!idReserva.trim()) {
+        Error("El ID de la Reserva es obligatorio.");
+        return;
+    }
     Confirmacion(undefined, undefined, function () {
         fetchpost("Seguros/guardarSeguros", "text", frm, function (res) {
             console.log("Respuesta del servidor al guardar:", res);
@@ -94,12 +99,12 @@ function actualizarCostoSeguroModal() {
 function Eliminar(id) {
 
     Confirmacion("Eliminar", "Desea eliminar el seguro", function () {
-        console.log(id);
         fetchGet(`Seguros/eliminarSeguros?id=${id}`, "text", function (data) {
             if (data === "1") {
                 listarSeguros();
+                Exito("Seguro eliminado correctamente");
             } else {
-                alert("No se pudo eliminar el seguro");
+                Error("No se pudo eliminar el seguro");
             }
         });
     });
@@ -107,7 +112,6 @@ function Eliminar(id) {
 
 function Editar(id) {
     fetchGet("Seguros/recuperarSeguros?idSeguro=" + id, "json", function (seguro) {
-        console.log("Datos de seguro recuperados:", seguro);
 
         if (seguro) {
             document.getElementById("txtidSegurosModal").value = seguro.idSeguro;
@@ -121,7 +125,7 @@ function Editar(id) {
             myModal.show();
             cerrarModal('exampleModal');
         } else {
-            console.error('No se encontraron datos para el seguro con ID:', id);
+            Error('No se encontraron datos para el seguro con ID:', id);
         }
     });
 }
@@ -132,15 +136,14 @@ function guardarEdicion() {
 
     Confirmacion("Confirmar", "¿Desea guardar los cambios?", function () {
         fetchpost("Seguros/guardarSeguros", "text", frm, function (res) {
-            console.log("Respuesta del servidor en guardarEdicion:", res);
             if (res == "1") {
-                Exito();
+                Exito("Seguro editado correctamente");
                 listarSeguros();
                 var modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
                 modal.hide();
             } else {
-                Error();
-                console.error("Error al guardar la edición. Código: " + res);
+                Error("No se puedo editar el seguro");
+
             }
         });
     });

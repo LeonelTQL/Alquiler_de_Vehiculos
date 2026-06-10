@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "profileAdmin";
+}
+
+
+<link href="~/css/profileAdmin.css" rel="stylesheet" />
+<form id="frmEditarAdmin" method="post" class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4 text-center">
+
+                <img src="~/sources/profile.png" alt="Foto Empleado" class="img-carnet">
+            </div>
+            <div class="col-8">
+                <input type="hidden" class="form-control" id="txtidEmpleado" name="idEmpleado">
+                <div class="md-3">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" class="form-control" id="txtnombre" name="nombre" readonly>
+                    </div>
+                </div>
+                <div class="md-3">
+                    <div class="form-group">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" class="form-control" id="txtapellido" name="apellido" readonly>
+                    </div>
+                </div>
+                <div class="md-3">
+                    <div class="form-group">
+                        <label for="cargo">Cargo:</label>
+                        <input type="text" class="form-control" id="txtcargo" name="cargo" readonly>
+                    </div>
+                </div>
+                <div class="md-3">
+                    <div class="form-group">
+                        <label for="telefono">Telefono:</label>
+                        <input type="text" class="form-control" id="txttelefono" name="telefono" readonly>
+                    </div>
+                </div>
+                <div class="md-3">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="txtemail" name="email" readonly>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                    <button type="button" id="btnEditar" class="btn btn-primary" onclick="activarEdicion()">Editar</button>
+                    <button type="button" id="btnGuardar" class="btn btn-success" style="display:none;" onclick="guardarEdicio()">Guardar Cambios</button>
+                    <button type="button" id="btnCancelar" class="btn btn-danger" style="display:none;" onclick="cancelarEdicion()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script src="~/js/empleados.js"></script>
+<script src="~/js/generic.js"></script>
+

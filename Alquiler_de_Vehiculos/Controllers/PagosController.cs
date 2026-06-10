@@ -1,11 +1,13 @@
 ﻿using CapaEntidad;
 using CapaNegocio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alquiler_de_Vehiculos.Controllers
 {
     public class PagosController : Controller
     {
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Index()
         {
             PagosBL obj = new PagosBL();

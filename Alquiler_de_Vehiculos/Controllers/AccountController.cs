@@ -9,11 +9,11 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(string username, string password)
     {
-        // Datos quemados para simular la autenticación
+        
         var users = new[]
         {
             new { Username = "admin", Password = "admin123", Role = "admin" },
-            new { Username = "empleado", Password = "empleado123", Role = "empleado" }
+            new { Username = "cliente", Password = "cliente123", Role = "cliente" }
         };
 
         var user = users.FirstOrDefault(u => u.Username == username && u.Password == password);
@@ -34,8 +34,9 @@ public class AccountController : Controller
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
 
-            return RedirectToAction("Dashboard", user.Role == "admin" ? "Admin" : "Empleado");
+            return RedirectToAction(user.Role == "admin" ? "Index" : "vehiculoCliente", "Vehiculo");
         }
+
 
         TempData["ErrorMessage"] = "Usuario o contraseña incorrectos";
         return RedirectToAction("Login", "Login");
@@ -45,5 +46,14 @@ public class AccountController : Controller
     {
         await HttpContext.SignOutAsync("CookieAuth"); 
         return RedirectToAction("Login", "Login");
+    }
+
+    public IActionResult profileCliente()
+    {
+        return View();
+    }
+    public IActionResult profileAdmin()
+    {
+        return View();
     }
 }

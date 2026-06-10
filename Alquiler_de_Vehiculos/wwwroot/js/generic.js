@@ -55,7 +55,7 @@ async function fetchGet(url, tiporespuesta, callback) {
         callback(data);
     } catch (e) {
         console.error("Error en fetchGet:", e);
-        alert("Algo salió mal: " + e.message);
+        //alert("Algo salió mal: " + e.message);
     }
 }
 
@@ -111,7 +111,7 @@ async function fetchpost(url, tiporespuesta, frm, callback) {
 
     } catch (e) {
         console.error("Ocurrio un problema en post:", e);
-        alert("Ocurrio un problema en post: " + e.message);
+        //alert("Ocurrio un problema en post: " + e.message);
     }
 }
 function pintar(objConfiguration) {
@@ -130,13 +130,38 @@ function pintar(objConfiguration) {
     if (objconfigurationGlobal.propiedadId == undefined) {
         objconfigurationGlobal.propiedadId = "";
     }
+
     fetchGet(objConfiguration.url, "json", function (res) {
         let contenido = "";
         contenido += "<div id='" + objconfigurationGlobal.divContenedorTabla + "'>";
         contenido += generarTabla(res);
         contenido += "</div>";
         document.getElementById("divtabla").innerHTML = contenido;
-        new DataTable('#myTable')
+
+        new DataTable('#tablaDatos', {
+            language: {
+                decimal: "",
+                emptyTable: "No hay datos disponibles en la tabla",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                infoEmpty: "Mostrando 0 a 0 de 0 entradas",
+                infoFiltered: "(filtrado de _MAX_ entradas totales)",
+                lengthMenu: "Mostrar _MENU_ entradas por página",
+                loadingRecords: "Cargando...",
+                processing: "Procesando...",
+                search: "Buscar:",
+                zeroRecords: "No se encontraron resultados",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior"
+                },
+                aria: {
+                    sortAscending: ": activar para ordenar la columna de manera ascendente",
+                    sortDescending: ": activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
     });
 }
 
@@ -144,56 +169,43 @@ function generarTabla(res) {
     let contenido = "";
     let gCabeceras = objconfigurationGlobal.cabeceras;
     let gPropiedades = objconfigurationGlobal.propiedades;
-    let nroRegistros = res.length;
 
-    contenido += "<table id='myTable'class='table'>";
+    contenido += "<table id='tablaDatos' class='table display'>";
     contenido += "<thead><tr>";
 
     for (let i = 0; i < gCabeceras.length; i++) {
         contenido += "<th>" + gCabeceras[i] + "</th>";
     }
 
-    if (objconfigurationGlobal.editar == true || objconfigurationGlobal.eliminar == true) {
+    if (objconfigurationGlobal.editar || objconfigurationGlobal.eliminar) {
         contenido += "<th>Operaciones</th>";
     }
 
     contenido += "</tr></thead><tbody>";
 
-    for (let i = 0; i < nroRegistros; i++) {
-        let obj = res[i];
+    res.forEach(obj => {
         contenido += "<tr>";
+        gPropiedades.forEach(prop => {
+            contenido += "<td>" + obj[prop] + "</td>";
+        });
 
-        for (let j = 0; j < gPropiedades.length; j++) {
-            let propiedadActual = gPropiedades[j];
-            contenido += "<td>" + obj[propiedadActual] + "</td>";
-        }
-
-        if (objconfigurationGlobal.editar == true || objconfigurationGlobal.eliminar == true) {
-            let propiedadId = objconfigurationGlobal.propiedadId;
+        if (objconfigurationGlobal.editar || objconfigurationGlobal.eliminar) {
             contenido += "<td>";
-            if (objconfigurationGlobal.editar == true) {
-                contenido += `<i onclick="Editar(${obj[propiedadId]})" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                            </svg>
-                            </i>`;
+            if (objconfigurationGlobal.editar) {
+                contenido += `<button onclick="Editar(${obj[objconfigurationGlobal.propiedadId]})" class="btn btn-info">Editar</button>`;
             }
-            if (objconfigurationGlobal.eliminar == true) {
-                contenido += `<i onclick="Eliminar(${obj[propiedadId]})" class = "btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                </svg></i>`;
+            if (objconfigurationGlobal.eliminar) {
+                contenido += `<button onclick="Eliminar(${obj[objconfigurationGlobal.propiedadId]})" class="btn btn-danger">Eliminar</button>`;
             }
             contenido += "</td>";
         }
-
         contenido += "</tr>";
-    }
+    });
 
     contenido += "</tbody></table>";
     return contenido;
 }
+
 
 function setN(namecontrol, valor) {
     document.getElementsByName(namecontrol)[0].value = valor;
@@ -304,3 +316,215 @@ function llenarCombo(data, idControl, propiedadId, propiedadNombre) {
     }
     document.getElementById(idControl).innerHTML = contenido;
 }
+
+function activarModoOscuro() {
+    // Cambia la clase en el documento raíz (html) y actualiza localStorage
+    document.documentElement.classList.toggle("modo-oscuro");
+    localStorage.setItem("modoOscuro", document.documentElement.classList.contains("modo-oscuro"));
+}
+
+function aplicarModoOscuro() {
+    // Verifica si el modo oscuro está activado desde localStorage
+    if (localStorage.getItem("modoOscuro") === "true") {
+        document.documentElement.classList.add("modo-oscuro");
+        inputSwitch.checked = true;
+        bolita.style.transform = "translateX(30px)";  
+    } else {
+        bolita.style.transform = "translateX(0)";  
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    aplicarModoOscuro(); 
+
+    inputSwitch.addEventListener("change", function () {
+        if (inputSwitch.checked) {
+            // Activa el modo oscuro
+            document.documentElement.classList.add("modo-oscuro");
+            bolita.style.transform = "translateX(30px)";  
+        } else {
+            // Desactiva el modo oscuro
+            document.documentElement.classList.remove("modo-oscuro");
+            bolita.style.transform = "translateX(0)"; 
+        }
+
+    
+        localStorage.setItem("modoOscuro", inputSwitch.checked);
+    });
+});
+
+// Código para el toggle switch, creado dinámicamente
+const contenedorSwitch = document.createElement("div");
+contenedorSwitch.style.position = "fixed";
+contenedorSwitch.style.top = "20px";
+contenedorSwitch.style.right = "120px";
+contenedorSwitch.style.zIndex = "1000";
+
+// Crear el toggle switch
+const toggleSwitch = document.createElement("label");
+toggleSwitch.style.display = "inline-block";
+toggleSwitch.style.position = "relative";
+toggleSwitch.style.width = "60px";
+toggleSwitch.style.height = "30px";
+toggleSwitch.style.cursor = "pointer";
+
+// Crear el input tipo checkbox
+const inputSwitch = document.createElement("input");
+inputSwitch.type = "checkbox";
+inputSwitch.style.display = "none";
+
+// Estilo del toggle
+const slider = document.createElement("span");
+slider.style.position = "absolute";
+slider.style.cursor = "pointer";
+slider.style.top = "0";
+slider.style.left = "0";
+slider.style.right = "0";
+slider.style.bottom = "0";
+slider.style.backgroundColor = "#5b3a8a";
+slider.style.transition = "0.3s";
+slider.style.borderRadius = "50px";
+
+// Crear la bolita del toggle
+const bolita = document.createElement("span");
+bolita.style.position = "absolute";
+bolita.style.top = "3px";
+bolita.style.left = "3px";
+bolita.style.width = "24px";
+bolita.style.height = "24px";
+bolita.style.borderRadius = "50%";
+bolita.style.backgroundColor = "#fff";
+bolita.style.transition = "0.3s";
+
+// Agregar la bolita y el slider al toggle
+slider.appendChild(bolita);
+toggleSwitch.appendChild(inputSwitch);
+toggleSwitch.appendChild(slider);
+
+// Agregar el toggle al contenedor y al documento
+contenedorSwitch.appendChild(toggleSwitch);
+document.body.appendChild(contenedorSwitch);
+
+
+// Estilos CSS para el modo oscuro
+document.head.insertAdjacentHTML("beforeend", `
+    <style>
+        .modo-oscuro, .modo-oscuro body {
+            background-color: #2a1a40;
+            color: #e0d7ff;
+        }
+        .modo-oscuro h1, .modo-oscuro h2, .modo-oscuro h3, .modo-oscuro h4, .modo-oscuro h5, .modo-oscuro h6, .modo-oscuro p, .modo-oscuro span, .modo-oscuro a {
+            color: #e0d7ff;
+        }
+        .modo-oscuro table {
+            background-color: #3a2a5e;
+            color: #e0d7ff;
+        }
+        .modo-oscuro th, .modo-oscuro td {
+            border-color: #5b3a8a;
+        }
+        .modo-oscuro button {
+            background-color: #5b3a8a;
+            color: white;
+            border: 1px solid #6d4bbf;
+        }
+        .modo-oscuro button:hover {
+            background-color: #7a5ed3;
+        }
+        .modo-oscuro input, .modo-oscuro textarea, .modo-oscuro select {
+            background-color: #3a2a5e;
+            color: #e0d7ff;
+            border: 1px solid #5b3a8a;
+        }
+        .modo-oscuro input::placeholder, .modo-oscuro textarea::placeholder {
+            color: #b8a8e0;
+        }
+        .modo-oscuro form {
+            background-color: #2a1a40;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        .modo-oscuro .form-group label {
+            color: #e0d7ff;
+        }
+        .modo-oscuro .form-group input {
+            background-color: #3a2a5e;
+            color: #e0d7ff;
+            border: 1px solid #5b3a8a;
+        }
+        .modo-oscuro .navbar {
+            background-color: #3a2a5e !important;
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+        }
+        .modo-oscuro .navbar .nav-link {
+            color: #e0d7ff !important;
+        }
+        .modo-oscuro .navbar .nav-link:hover {
+            background-color: #5b3a8a;
+            color: white !important;
+        }
+        .modo-oscuro .nav-user-menu.dropdown {
+            background-color: #3a2a5e;  /* Fondo oscuro para el contenedor */
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .modo-oscuro .nav-user-menu.dropdown .dropdown-menu {
+            background-color: #3a2a5e;
+            border-color: #5b3a8a;
+        }
+        .modo-oscuro .nav-user-menu.dropdown .dropdown-item {
+            color: #e0d7ff;
+        }
+        .modo-oscuro .nav-user-menu.dropdown .dropdown-item:hover {
+            background-color: #5b3a8a;
+            color: white;
+        }
+        .modo-oscuro .nav-user-menu.dropdown .dropdown-toggle i {
+            color: #5b3a8a; 
+        }
+        .modo-oscuro .nav-user-menu.dropdown .dropdown-toggle i:hover {
+            color: white;  
+        }
+        .modo-oscuro .dropdown-menu {
+            background-color: #3a2a5e;
+            color: #e0d7ff;
+        }
+        .modo-oscuro .dropdown-item {
+            color: #e0d7ff;
+        }
+        .modo-oscuro .dropdown-item:hover {
+            background-color: #5b3a8a;
+        }
+        .modo-oscuro .carousel-inner img {
+            filter: brightness(0.8);
+        }
+        .modo-oscuro .modal-content {
+            background-color: #3a2a5e;
+            color: #e0d7ff;
+        }
+        .modo-oscuro .modal-header, .modo-oscuro .modal-footer {
+            border-color: #5b3a8a;
+        }
+        .modo-oscuro .card {
+            background-color: #3a2a5e;
+            color: #e0d7ff;
+            border: 1px solid #5b3a8a;
+        }
+        .modo-oscuro .card .card-title, .modo-oscuro .card .card-body {
+            color: #e0d7ff;
+        }
+        .modo-oscuro .card button {
+            background-color: #5b3a8a;
+            color: white;
+            border: 1px solid #6d4bbf;
+        }
+        .modo-oscuro .card button:hover {
+            background-color: #7a5ed3;
+        }
+        .modo-oscuro .card-header {
+            background-color: #5b3a8a;
+            color: white;
+        }
+    </style>
+`);
